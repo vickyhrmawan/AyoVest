@@ -1,0 +1,25 @@
+image: webcuisine/gitlab-ci-react-native-android
+
+stages:
+  - build
+
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+    - android/.gradle/
+
+build-and-send-to-telegram:
+  stage: build
+  script:
+    - yarn
+    - cd android
+    - chmod +x ./gradlew
+    - ./gradlew assembleRelease
+    - cd app/build/outputs/apk/release/
+    - curl --data chat_id=$TELEGRAM_CHAT_ID --data-urlencode text="[$CI_COMMIT_REF_NAME] $CI_COMMIT_TITLE by $GITLAB_USER_NAME" $TELEGRAM_BOT_URL/sendMessage
+    - "curl -X POST -H 'Content-Type: multipart/form-data' -F document=@app-release.apk -F chat_id=$TELEGRAM_CHAT_ID $TELEGRAM_BOT_URL/sendDocument"
+  artifacts:
+    paths:
+      - android/app/build/outputs/apk/
+  only:
+    - FinalProject
