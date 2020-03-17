@@ -14,6 +14,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
 import Modal from 'react-native-modal';
+import ComCategoryModal from '../../Modal/ComCategoryModal';
+import {getLivestockCategory} from '../../redux/action/LivestockAction';
+import {connect} from 'react-redux';
 
 const {width} = Dimensions.get('window');
 
@@ -40,45 +43,13 @@ const DATA = [
   },
 ];
 
-function Item({title}) {
-  console.log(title.image);
-  return (
-    <TouchableOpacity activeOpacity={0.8}>
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <LinearGradient
-          colors={['transparent', colorCSS.gray, colorCSS.black]}
-          style={{useAngle: true, angle: 90, angleCenter: {x: 0.5, y: 0.5}}}>
-          <Image
-            style={{
-              width: width * 1.2,
-              height: width * 0.39,
-              alignSelf: 'center',
-              opacity: 0.7,
-            }}
-            source={title.image}
-          />
-        </LinearGradient>
-        <Text
-          style={{
-            color: 'white',
-            position: 'absolute',
-            fontSize: 30,
-            fontWeight: 'bold',
-            marginTop: 40,
-            marginLeft: 20,
-            textShadowColor: 'rgba(0, 0, 0, 0.25)',
-            textShadowOffset: {width: 1, height: 1},
-            textShadowRadius: 5,
-          }}>
-          {title.title}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-}
-
-export default class CommodityCategory extends Component {
+class CommodityCategory extends Component {
+  componentDidMount() {
+    this.props.getLivestockCategory();
+  }
   render() {
+    const {dataLivestockCat, isLoading, modalCategory} = this.props.livestock;
+    // console.log('dataLivestockCat', dataLivestockCat);
     return (
       <View style={{backgroundColor: colorCSS.white}}>
         <View
@@ -97,11 +68,60 @@ export default class CommodityCategory extends Component {
         <View>
           <FlatList
             data={DATA}
-            renderItem={({item}) => <Item title={item} />}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.getLivestockCategory(item.title)}>
+                <View style={{flex: 1, backgroundColor: 'white'}}>
+                  <LinearGradient
+                    colors={['transparent', colorCSS.gray, colorCSS.black]}
+                    style={{
+                      useAngle: true,
+                      angle: 90,
+                      angleCenter: {x: 0.5, y: 0.5},
+                    }}>
+                    <Image
+                      style={{
+                        width: width * 1.2,
+                        height: width * 0.39,
+                        alignSelf: 'center',
+                        opacity: 0.7,
+                      }}
+                      source={item.image}
+                    />
+                  </LinearGradient>
+                  <Text
+                    style={{
+                      color: 'white',
+                      position: 'absolute',
+                      fontSize: 30,
+                      fontWeight: 'bold',
+                      marginTop: 40,
+                      marginLeft: 20,
+                      textShadowColor: 'rgba(0, 0, 0, 0.25)',
+                      textShadowOffset: {width: 1, height: 1},
+                      textShadowRadius: 5,
+                    }}>
+                    {item.title}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
             keyExtractor={item => item.id}
           />
         </View>
+        <Modal isVisible={modalCategory} style={{margin: 0}}>
+          <ComCategoryModal />
+        </Modal>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  livestock: state.livestock,
+});
+
+export default connect(mapStateToProps, {getLivestockCategory})(
+  CommodityCategory,
+);

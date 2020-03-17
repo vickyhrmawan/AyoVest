@@ -29,7 +29,7 @@ export const register = (
       dispatch({type: 'ISLOADING', payload: false});
     } catch (e) {
       console.log('error register', e.response.data);
-      alert('Please check your entries again');
+      alert(res.data.message);
       dispatch({type: 'ISLOADING', payload: false});
     }
   };

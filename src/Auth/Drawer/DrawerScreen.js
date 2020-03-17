@@ -76,7 +76,7 @@ class DrawerScreen extends Component {
           </View>
           <View>
             <Text
-              onPress={this.navigateToScreen('LandingPage')}
+              onPress={this.navigateToScreen('Login')}
               style={design.menuList}>
               <Icon name="power-off" size={20} /> Logout
             </Text>

@@ -38,7 +38,7 @@ class Home extends Component {
 
   render() {
     const {dataLivestock, isLoading, modalDetail} = this.props.livestock;
-    console.log(dataLivestock);
+    console.log('dataLivestock', dataLivestock);
     if (isLoading === true) {
       return <LoadingScreen />;
     }
@@ -113,14 +113,14 @@ class Home extends Component {
           </Text>
 
           <FlatList
+            numColumns={2}
+            horizontal={false}
             data={dataLivestock}
             renderItem={({item}) => (
               <TouchableOpacity
+                style={{width: width / 2}}
                 onPress={() => this.props.getLivestockId(item._id)}>
                 <View>
-                  {/* <LinearGradient
-                  colors={['transparent', colorCSS.gray, colorCSS.black]}> */}
-                  {/* <View style={{paddingHorizontal:10}}> */}
                   <View
                     style={{
                       marginHorizontal: 10,
@@ -128,12 +128,11 @@ class Home extends Component {
                     }}>
                     <Image
                       style={{
-                        width: '90%',
+                        width: '100%',
                         resizeMode: 'cover',
                         height: 200,
                         alignSelf: 'center',
                         borderRadius: 20,
-                        // margin: 90,
                       }}
                       source={{uri: item.image}}
                     />
@@ -143,10 +142,9 @@ class Home extends Component {
                         backgroundColor: colorCSS.greenlogotransparent,
                         bottom: 0,
                         left: 0,
-                        width: '50%',
+                        width: '100%',
                         borderBottomLeftRadius: 20,
-                        borderTopRightRadius: 20,
-                        marginLeft: 20,
+                        borderBottomRightRadius: 20,
                       }}>
                       <Text style={design.flatlistTitle}>{item.name}</Text>
                       <Text style={design.flatlistNumber}>
@@ -154,18 +152,13 @@ class Home extends Component {
                       </Text>
                     </View>
                   </View>
-
-                  {/* </View> */}
-                  {/* </LinearGradient> */}
-                  {/* <Text style={design.flatlistText}>{item.description}</Text> */}
-                  {/* <Text style={design.flatlistNumber}>S$ {item.priceUnit}</Text> */}
                 </View>
               </TouchableOpacity>
             )}
-            keyExtractor={item => item._id}
+            keyExtractor={(item, index) => index.toString()}
           />
         </View>
-        <Modal isVisible={modalDetail}>
+        <Modal isVisible={modalDetail} style={{margin: 0}}>
           <ComDetailModal />
         </Modal>
       </View>
