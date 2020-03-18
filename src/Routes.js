@@ -29,6 +29,7 @@ import Help from './Auth/Drawer/Help';
 import HowItWorks from './Auth/Drawer/HowItWorks';
 import Profile from './Auth/Drawer/Profile';
 import DrawerScreen from './Auth/Drawer/DrawerScreen';
+import Splashscreen from './Auth/Home/Splashscreen';
 
 const AuthNavigator = createStackNavigator({
   LandingPage: {
@@ -84,10 +85,10 @@ const Tabs = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
-      activeTintColor: colorCSS.white,
-      inactiveTintColor: colorCSS.gray,
+      activeTintColor: colorCSS.greenlogo,
+      inactiveTintColor: colorCSS.black,
       style: {
-        backgroundColor: colorCSS.greenlogo,
+        backgroundColor: colorCSS.white,
       },
       indicatorStyle: {
         backgroundColor: colorCSS.black,
@@ -191,9 +192,10 @@ const StackNavigator = createStackNavigator(
 export default createAppContainer(
   createSwitchNavigator(
     {
+      Splash: Splashscreen,
       Landing: AuthNavigator,
       MainApp: StackNavigator,
     },
-    {initialRouteName: 'MainApp'},
+    {initialRouteName: 'Splash'},
   ),
 );
