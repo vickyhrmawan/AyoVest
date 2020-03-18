@@ -5,11 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  SafeAreaView,
   FlatList,
   Image,
   Dimensions,
-  Button,
   ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,7 +19,6 @@ import Icon from 'react-native-vector-icons/Entypo';
 import Modal from 'react-native-modal';
 import ComDetailModal from '../../Modal/ComDetailModal';
 import LoadingScreen from '../css/Loadingscreen';
-import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import {
   getLivestock,
@@ -29,7 +26,6 @@ import {
   moreLivestock,
 } from '../../redux/action/LivestockAction';
 import {getToken} from '../../redux/action/AuthAction';
-import Splashscreen from './Splashscreen';
 
 const width = Dimensions.get('window').width;
 
@@ -39,7 +35,6 @@ class Home extends Component {
     title: '',
     searchInput: [],
     searchData: [],
-    startLoading: true,
   };
 
   _searchingData(text) {
@@ -53,22 +48,9 @@ class Home extends Component {
     this.setState({searchData: catchData});
   }
 
-  performTimeConsumingTask = async () => {
-    return new Promise(resolve =>
-      setTimeout(() => {
-        this.props.myToken !== 0;
-      }, 3000),
-    );
-  };
-
   async componentDidMount() {
     this.props.getLivestock();
     this.props.getToken();
-    const data = await this.performTimeConsumingTask();
-
-    if (data !== null) {
-      this.setState({startLoading: false});
-    }
   }
   renderFooter() {
     return (
