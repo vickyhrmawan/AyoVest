@@ -58,7 +58,7 @@ class Login extends Component {
             marginRight: 15,
           }}></TextInput>
         <TouchableOpacity>
-          <Text
+          {/* <Text
             style={{
               color: 'blue',
               fontWeight: 'bold',
@@ -68,7 +68,7 @@ class Login extends Component {
               marginBottom: 20,
             }}>
             Forgot your password?
-          </Text>
+          </Text> */}
         </TouchableOpacity>
         <TouchableOpacity
           style={design.button}

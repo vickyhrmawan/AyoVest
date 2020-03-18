@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 import colorCSS from '../css/Color';
 import {design} from '../css/Styles';
+import {connect} from 'react-redux';
+import {logout} from '../../redux/action/AuthAction';
 
 class DrawerScreen extends Component {
   navigateToScreen = route => () => {
@@ -18,6 +20,9 @@ class DrawerScreen extends Component {
   };
 
   render() {
+    const {myToken} = this.props.auth;
+    console.log(myToken);
+
     return (
       // <View style={{flex: 1, backgroundColor: colorCSS.greenlogo}}>
       <LinearGradient
@@ -36,12 +41,16 @@ class DrawerScreen extends Component {
             marginHorizontal: 15,
             justifyContent: 'flex-end',
           }}>
-          <Text style={design.profileName}>Agus Mulyono</Text>
+          {/* <Text style={design.profileName}>Agus Mulyono</Text> */}
         </View>
         <View style={{flex: 3}}>
           <View>
             <Text
-              onPress={this.navigateToScreen('Profile')}
+              onPress={
+                myToken !== 'guest'
+                  ? this.navigateToScreen('Profile')
+                  : this.navigateToScreen('Login')
+              }
               style={design.menuList}>
               <Icon name="user" size={20} /> My Profile
             </Text>
@@ -75,11 +84,19 @@ class DrawerScreen extends Component {
             </Text>
           </View>
           <View>
-            <Text
-              onPress={this.navigateToScreen('Login')}
-              style={design.menuList}>
-              <Icon name="power-off" size={20} /> Logout
-            </Text>
+            {myToken !== 'guest' ? (
+              <Text
+                onPress={() =>
+                  this.props.logout().then(() => {
+                    if (this.props.auth.myToken === 'guest') {
+                      this.props.navigation.navigate('Home');
+                    }
+                  })
+                }
+                style={design.menuList}>
+                <Icon name="power-off" size={20} /> Logout
+              </Text>
+            ) : null}
           </View>
         </View>
         {/* </View> */}
@@ -92,4 +109,10 @@ DrawerScreen.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default DrawerScreen;
+// export default DrawerScreen;
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {logout})(DrawerScreen);

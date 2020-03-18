@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   Button,
+  ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {design} from '../css/Styles';
@@ -20,9 +21,15 @@ import Icon from 'react-native-vector-icons/Entypo';
 import Modal from 'react-native-modal';
 import ComDetailModal from '../../Modal/ComDetailModal';
 import LoadingScreen from '../css/Loadingscreen';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
-import {getLivestock, getLivestockId} from '../../redux/action/LivestockAction';
+import {
+  getLivestock,
+  getLivestockId,
+  moreLivestock,
+} from '../../redux/action/LivestockAction';
+import {getToken} from '../../redux/action/AuthAction';
+import Splashscreen from './Splashscreen';
 
 const width = Dimensions.get('window').width;
 
@@ -30,21 +37,71 @@ class Home extends Component {
   state = {
     persons: [],
     title: '',
+    searchInput: [],
+    searchData: [],
+    startLoading: true,
   };
 
-  componentDidMount() {
+  _searchingData(text) {
+    this.setState({searchInput: text});
+    const catchData = this.props.livestock.dataLivestock.filter(val => {
+      const itemData = `${val.name.toUpperCase()}`;
+      const textData = text.toUpperCase();
+
+      return itemData.indexOf(textData) > -1;
+    });
+    this.setState({searchData: catchData});
+  }
+
+  performTimeConsumingTask = async () => {
+    return new Promise(resolve =>
+      setTimeout(() => {
+        this.props.myToken !== 0;
+      }, 3000),
+    );
+  };
+
+  async componentDidMount() {
     this.props.getLivestock();
+    this.props.getToken();
+    const data = await this.performTimeConsumingTask();
+
+    if (data !== null) {
+      this.setState({startLoading: false});
+    }
+  }
+  renderFooter() {
+    return (
+      <View
+        style={{
+          padding: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}>
+        {this.props.livestock.hasNextPage ? (
+          <ActivityIndicator color="black" style={{margin: 15}} />
+        ) : null}
+      </View>
+    );
   }
 
   render() {
-    const {dataLivestock, isLoading, modalDetail} = this.props.livestock;
-    console.log('dataLivestock', dataLivestock);
+    const {
+      dataLivestock,
+      isLoading,
+      modalDetail,
+      hasNextPage,
+      nextPage,
+    } = this.props.livestock;
+    const {myToken} = this.props.auth;
+    console.log('tokenku', myToken);
     if (isLoading === true) {
       return <LoadingScreen />;
     }
     return (
       <View style={{flex: 1}}>
-        <View style={{flex: 1, marginTop: 20}}>
+        {/* <View style={{flex: 1, marginTop: 20}}>
           <Swiper
             showsButtons={false}
             dot={
@@ -106,6 +163,29 @@ class Home extends Component {
               </Text>
             </View>
           </Swiper>
+        </View> */}
+        <View
+          style={{
+            height: 50,
+            backgroundColor: 'white',
+            flexDirection: 'row',
+            padding: 5,
+            alignItems: 'center',
+            borderWidth: 1,
+            borderRadius: 30,
+            marginLeft: 10,
+            marginRight: 10,
+            marginTop: 30,
+          }}>
+          <Icon
+            name="magnifying-glass"
+            style={{fontSize: 25, marginLeft: 20}}
+          />
+          <TextInput
+            placeholder="Search"
+            style={{fontSize: 15, paddingLeft: 15}}
+            onChangeText={text => this._searchingData(text)}
+          />
         </View>
         <View style={{flex: 1}}>
           <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 20}}>
@@ -115,7 +195,16 @@ class Home extends Component {
           <FlatList
             numColumns={2}
             horizontal={false}
-            data={dataLivestock}
+            data={
+              this.state.searchInput.length > 3
+                ? this.state.searchData
+                : dataLivestock
+            }
+            onEndReached={
+              hasNextPage !== false &&
+              (() => this.props.moreLivestock(nextPage))
+            }
+            onEndReachedThreshold={0.5}
             renderItem={({item}) => (
               <TouchableOpacity
                 style={{width: width / 2}}
@@ -156,6 +245,7 @@ class Home extends Component {
               </TouchableOpacity>
             )}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={this.renderFooter.bind(this)}
           />
         </View>
         <Modal isVisible={modalDetail} style={{margin: 0}}>
@@ -168,6 +258,12 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   livestock: state.livestock,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, {getLivestock, getLivestockId})(Home);
+export default connect(mapStateToProps, {
+  getLivestock,
+  getLivestockId,
+  moreLivestock,
+  getToken,
+})(Home);

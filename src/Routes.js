@@ -158,6 +158,12 @@ const StackNavigator = createStackNavigator(
         headerShown: false,
       },
     },
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
   },
   {
     navigationOptions: ({navigation}) => ({
@@ -188,6 +194,6 @@ export default createAppContainer(
       Landing: AuthNavigator,
       MainApp: StackNavigator,
     },
-    {initialRouteName: 'Landing'},
+    {initialRouteName: 'MainApp'},
   ),
 );

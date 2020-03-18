@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 // import * as Keychain from 'react-native-keychain';
 
 export const register = (
@@ -51,6 +52,7 @@ export const login = (email, password) => {
         },
       );
 
+      AsyncStorage.setItem('token', res.data.data.jwt_token);
       // await Keychain.resetGenericPassword();
       // await Keychain.setGenericPassword(
       //   res.data.data.email,
@@ -67,16 +69,32 @@ export const login = (email, password) => {
   };
 };
 
-export const getLivestockDetail = async idLivestock => {
-  try {
-    let res = await axios.get(
-      `http://ayo-vest.herokuapp.com/api/v1/livestocks/getone?id=${idLivestock}`,
-    );
-    console.log(res);
-    this.setState({persons: res.data.data.docs});
-    this.setState({title: 'cok'});
-    console.log(this.state.persons);
-  } catch (error) {
-    console.log('error persons ', error);
-  }
+export const getToken = () => {
+  return async dispatch => {
+    try {
+      const findToken = await AsyncStorage.getItem('token');
+      if (findToken) {
+        if (findToken !== 'guest') {
+          dispatch({type: 'TOKEN', payload: findToken});
+        } else {
+          AsyncStorage.setItem('token', 'guest');
+        }
+      } else {
+        AsyncStorage.setItem('token', 'guest');
+      }
+    } catch (error) {
+      console.log('error register', error);
+    }
+  };
+};
+
+export const logout = () => {
+  return async dispatch => {
+    try {
+      await dispatch({type: 'TOKEN', payload: 'guest'});
+      dispatch({type: 'LOGOUT'});
+    } catch (error) {
+      console.log('error register', error);
+    }
+  };
 };
