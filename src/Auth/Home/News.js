@@ -5,7 +5,7 @@ export default class News extends Component {
   render() {
     return (
       <View>
-        <Text> News </Text>
+        <Text> News For Livestock </Text>
       </View>
     );
   }
