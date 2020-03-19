@@ -26,7 +26,7 @@ class Splashscreen extends Component {
       <View style={styles.viewStyles}>
         <Image
           source={require('../../../assets/img/ayovest-logo.png')}
-          style={{width: 300, height: 220}}
+          style={{width: 320, height: 230}}
         />
       </View>
     );

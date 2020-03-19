@@ -10,10 +10,8 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
-import axios from 'axios';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/Entypo';
 import Modal from 'react-native-modal';
@@ -159,10 +157,9 @@ class Home extends Component {
             marginRight: 10,
             marginTop: 30,
           }}>
-          <Icon
-            name="magnifying-glass"
-            style={{fontSize: 25, marginLeft: 20}}
-          />
+          <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+            <Icon name="menu" style={{fontSize: 25, marginLeft: 20}} />
+          </TouchableOpacity>
           <TextInput
             placeholder="Search"
             style={{fontSize: 15, paddingLeft: 15}}

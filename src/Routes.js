@@ -19,7 +19,6 @@ import Register from './Auth/LandingPage/Register';
 import Login from './Auth/LandingPage/Login';
 //Home for tab
 import Home from './Auth/Home/Home';
-import Commodity from './Auth/Home/Commodity';
 import News from './Auth/Home/News';
 import CommodityCategory from './Auth/Home/CommodityCategory';
 //Drawer
@@ -113,87 +112,62 @@ const DrawerNavigator = createDrawerNavigator(
   },
 );
 
-// const MenuImage = ({navigation}) => {
-//   if (!navigation.state.isDrawerOpen) {
-//     return <Image source={require('../assets/img/menu-button.png')} />;
-//   } else {
-//     return <Image source={require('../assets/img/menu-button.png')} />;
-//   }
-// };
-
-const StackNavigator = createStackNavigator(
-  {
-    DrawerNavigator: {
-      screen: DrawerNavigator,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    AboutUs: {
-      screen: AboutUs,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    ContactUs: {
-      screen: ContactUs,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    Help: {
-      screen: Help,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    HowItWorks: {
-      screen: HowItWorks,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    Login: {
-      screen: Login,
-      navigationOptions: {
-        headerShown: false,
-      },
+const StackNavigator = createStackNavigator({
+  DrawerNavigator: {
+    screen: DrawerNavigator,
+    navigationOptions: {
+      headerShown: false,
     },
   },
-  {
-    navigationOptions: ({navigation}) => ({
-      title: 'ReactNavigation', // Title to appear in status bar
-      headerLeft: (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.dispatch(DrawerActions.toggleDrawer());
-          }}>
-          <Text>Teaaaaaaak</Text>
-          {/* <MenuImage style="styles.bar" navigation={navigation} /> */}
-        </TouchableOpacity>
-      ),
-      headerStyle: {
-        backgroundColor: '#333',
-      },
-      headerTintColor: colorCSS.white,
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    }),
+  AboutUs: {
+    screen: AboutUs,
+    navigationOptions: {
+      headerShown: false,
+    },
   },
-);
+  ContactUs: {
+    screen: ContactUs,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Help: {
+    screen: Help,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  HowItWorks: {
+    screen: HowItWorks,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+});
 
 export default createAppContainer(
   createSwitchNavigator(
     {
       Splash: Splashscreen,
-      Landing: AuthNavigator,
+      // Landing: AuthNavigator,
       MainApp: StackNavigator,
     },
     {initialRouteName: 'Splash'},

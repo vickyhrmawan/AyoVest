@@ -1,6 +1,5 @@
 import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-// import * as Keychain from 'react-native-keychain';
 
 export const register = (
   fullname,
@@ -13,7 +12,7 @@ export const register = (
     dispatch({type: 'ISLOADING', payload: true});
     try {
       const res = await Axios.post(
-        'http://ayo-vest.herokuapp.com/api/v1/investors',
+        'https://ayo-vest.herokuapp.com/api/v1/investors',
         {
           fullname: fullname,
           email: email,
@@ -29,8 +28,8 @@ export const register = (
       alert(res.data.message);
       dispatch({type: 'ISLOADING', payload: false});
     } catch (e) {
-      console.log('error register', e.response.data);
-      alert(res.data.message);
+      console.log('error register', e);
+      // alert(res.data.message);
       dispatch({type: 'ISLOADING', payload: false});
     }
   };
@@ -42,7 +41,7 @@ export const login = (email, password) => {
     try {
       dispatch({type: 'ISLOADING', payload: true});
       const res = await Axios.post(
-        'http://ayo-vest.herokuapp.com/api/v1/investors/auth',
+        'https://ayo-vest.herokuapp.com/api/v1/investors/auth',
         {
           email: email,
           password: password,
@@ -53,11 +52,7 @@ export const login = (email, password) => {
       );
 
       AsyncStorage.setItem('token', res.data.data.jwt_token);
-      // await Keychain.resetGenericPassword();
-      // await Keychain.setGenericPassword(
-      //   res.data.data.email,
-      //   res.data.data.token,
-      // );
+      dispatch(getToken());
 
       console.log('response login', res.data);
       dispatch({type: 'LOGIN', payload: res.data});
@@ -91,8 +86,9 @@ export const getToken = () => {
 export const logout = () => {
   return async dispatch => {
     try {
-      await dispatch({type: 'TOKEN', payload: 'guest'});
-      dispatch({type: 'LOGOUT'});
+      await dispatch({type: 'LOGOUT'});
+      dispatch({type: 'TOKEN', payload: 'guest'});
+      dispatch({type: 'ISLOADING', payload: false});
     } catch (error) {
       console.log('error register', error);
     }

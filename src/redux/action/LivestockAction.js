@@ -17,7 +17,7 @@ export const getLivestock = () => {
     dispatch({type: 'ISLOADING', payload: true});
     try {
       let res = await axios.get(
-        `http://ayo-vest.herokuapp.com/api/v1/livestocks/getall`,
+        `https://ayo-vest.herokuapp.com/api/v1/livestocks/getall`,
       );
       // console.log(this.state.persons);
       dispatch({type: 'ISLOADING', payload: false});
@@ -39,7 +39,7 @@ export const moreLivestock = page => {
     // dispatch({type: 'ISLOADING', payload: true});
     try {
       let res = await axios.get(
-        `http://ayo-vest.herokuapp.com/api/v1/livestocks/getall?page=${page}`,
+        `https://ayo-vest.herokuapp.com/api/v1/livestocks/getall?page=${page}`,
       );
       // console.log(this.state.persons);
       // dispatch({type: 'ISLOADING', payload: false});
@@ -65,7 +65,7 @@ export const getLivestockId = id => {
     dispatch({type: 'ISLOADING', payload: true});
     try {
       let res = await axios.get(
-        `http://ayo-vest.herokuapp.com/api/v1/livestocks/getone?id=${id}`,
+        `https://ayo-vest.herokuapp.com/api/v1/livestocks/getone?id=${id}`,
       );
       dispatch({type: 'ISLOADING', payload: false});
       dispatch({type: 'SAVE_DATA_LIVESTOCKID', payload: res.data.data});
@@ -83,7 +83,7 @@ export const getLivestockCategory = kind => {
     // dispatch({type: 'ISLOADING', payload: true});
     try {
       let res = await axios.get(
-        `http://ayo-vest.herokuapp.com/api/v1/livestocks/getall?kind=${kind}`,
+        `https://ayo-vest.herokuapp.com/api/v1/livestocks/getall?kind=${kind}`,
       );
       console.log('buatmasuk', res.data.data.docs);
       //   dispatch({type: 'ISLOADING', payload: false});
