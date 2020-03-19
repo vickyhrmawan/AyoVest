@@ -22,4 +22,4 @@ build-and-send-to-telegram:
     paths:
       - android/app/build/outputs/apk/
   only:
-    - FinalProject
+    - develop
