@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {design} from '../css/Styles';
 import {login} from '../../redux/action/AuthAction';
@@ -12,6 +13,9 @@ import {connect} from 'react-redux';
 import Loadingscreen from '../css/Loadingscreen';
 import Modal from 'react-native-modal';
 import Axios from 'axios';
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 class Login extends Component {
   constructor(props) {
@@ -139,7 +143,7 @@ class Login extends Component {
                   margin: 5,
                   paddingHorizontal: 20,
                   fontWeight: '500',
-                  width: 300,
+                  width: width / 1.5,
                 }}
                 placeholderTextColor="black"
               />

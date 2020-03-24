@@ -18,16 +18,20 @@ import {
   setModalDetail,
   getLivestockId,
 } from '../redux/action/LivestockAction';
-import Icon from 'react-native-vector-icons/Entypo';
-//hello world
+import Icon from 'react-native-vector-icons/AntDesign';
+
 const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 class ComCategoryModal extends Component {
   render() {
     const {dataLivestockCat, isLoading, modalDetail} = this.props.livestock;
     console.log('theseare', dataLivestockCat);
+    // console.log('theseare', dataLivestockCat[0].kind);
     return (
       <View style={{backgroundColor: 'white', flex: 1}}>
+        <Text style={design.textHeader}>AYOvest</Text>
+
         <Text
           style={{
             fontSize: 30,
@@ -36,50 +40,87 @@ class ComCategoryModal extends Component {
             color: colorCSS.greenlogo,
             marginVertical: 6,
           }}>
-          Categories
+          {/* Categories */}
+          {dataLivestockCat[0].kind}
         </Text>
         <FlatList
-          numColumns={2}
           data={dataLivestockCat}
           renderItem={({item}) => (
             <TouchableOpacity
-              style={{width: width / 2}}
               onPress={() => this.props.getLivestockId(item._id)}>
-              <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  marginVertical: 10,
+                  marginHorizontal: 20,
+                }}>
                 <View
                   style={{
-                    marginHorizontal: 10,
-                    marginVertical: 10,
+                    flex: 0,
+
+                    // padding: 10,
                   }}>
                   <Image
                     style={{
-                      width: '100%',
+                      width: width / 2.25,
                       resizeMode: 'cover',
-                      height: 200,
+                      height: width / 3,
                       alignSelf: 'center',
-                      borderRadius: 20,
+                      borderTopLeftRadius: 15,
+                      borderBottomLeftRadius: 15,
                     }}
                     source={{uri: item.image}}
                   />
+                </View>
+                <View
+                  style={{
+                    backgroundColor: colorCSS.white,
+                    width: width / 2,
+                    borderTopRightRadius: 15,
+                    borderBottomRightRadius: 15,
+                    flex: 1,
+                    borderTopWidth: 1,
+                    borderTopColor: 'rgba(0,0,0,0.3)',
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(0,0,0,0.3)',
+                    borderRightWidth: 1,
+                    borderRightColor: 'rgba(0,0,0,0.3)',
+                  }}>
+                  <Text style={design.flatlistTitle}>{item.name}</Text>
                   <View
                     style={{
-                      position: 'absolute',
-                      backgroundColor: colorCSS.greenlogotransparent,
-                      bottom: 0,
-                      left: 0,
-                      width: '100%',
-                      borderBottomLeftRadius: 20,
-                      borderBottomRightRadius: 20,
-                      shadowColor: '#000',
-                      shadowOffset: {width: 0, height: 2},
-                      shadowOpacity: 0.8,
-                      shadowRadius: 2,
-                      elevation: 1,
+                      flexDirection: 'row',
+                      // alignContent: 'space-between',
                     }}>
-                    <Text style={design.flatlistTitle}>{item.name}</Text>
-                    <Text style={design.flatlistNumber}>
-                      S$ {item.priceUnit}
-                    </Text>
+                    <View style={{width: width / 4.25}}>
+                      <Text style={design.flatlistText}>price/unit</Text>
+                      <Text style={design.flatlistNumber}>
+                        S$ {item.priceUnit}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={design.flatlistText}>contract</Text>
+                      <Text style={design.flatlistNumber}>
+                        {item.contractPeriod} years
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignContent: 'space-around',
+                    }}>
+                    <View style={{width: width / 4.25}}>
+                      <Text style={design.flatlistText}>return/year</Text>
+                      <Text style={design.flatlistNumber}>{item.roi}%</Text>
+                    </View>
+                    <View>
+                      <Text style={design.flatlistText}>unit</Text>
+                      <Text style={design.flatlistNumber}>
+                        {item.totalUnit}
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -89,10 +130,15 @@ class ComCategoryModal extends Component {
         />
         <TouchableOpacity
           onPress={() => this.props.setModalCategory()}
-          style={{position: 'absolute', alignSelf: 'flex-end'}}>
-          <Icon name="cross" size={40} style={{color: colorCSS.greenlogo}} />
+          style={{
+            position: 'absolute',
+            alignSelf: 'flex-start',
+            top: 5,
+            padding: 5,
+          }}>
+          <Icon name="arrowleft" size={30} color="white" />
         </TouchableOpacity>
-        <Modal isVisible={modalDetail}>
+        <Modal isVisible={modalDetail} style={{margin: 0}}>
           <ComDetailModal />
         </Modal>
       </View>

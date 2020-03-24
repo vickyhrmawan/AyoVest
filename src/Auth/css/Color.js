@@ -6,7 +6,7 @@ const colorCSS = {
   darkgreen: '#003700',
   //greengradient
   greenlogo: '#45bb5d',
-  greenlogo1: '#00af84',
+  greenlogo1: '#217d38',
   greenlogo2: '#00a0a8',
   greenlogo3: '#008ebe',
   greenlogo4: '#0078c1',

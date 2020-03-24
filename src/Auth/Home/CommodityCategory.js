@@ -1,16 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  SafeAreaView,
-  FlatList,
-  Image,
-  Dimensions,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Text, View, TouchableOpacity, Image, Dimensions} from 'react-native';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
 import Modal from 'react-native-modal';
@@ -18,30 +7,8 @@ import ComCategoryModal from '../../Modal/ComCategoryModal';
 import {getLivestockCategory} from '../../redux/action/LivestockAction';
 import {connect} from 'react-redux';
 
-const {width} = Dimensions.get('window');
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Cow',
-    image: require('../../../assets/img/cow-list.jpg'),
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Chicken',
-    image: require('../../../assets/img/chicken-list.jpg'),
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Goat',
-    image: require('../../../assets/img/goat-list.jpg'),
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e26c44',
-    title: 'Duck',
-    image: require('../../../assets/img/duck-list.jpg'),
-  },
-];
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 class CommodityCategory extends Component {
   componentDidMount() {
@@ -51,64 +18,67 @@ class CommodityCategory extends Component {
     const {dataLivestockCat, isLoading, modalCategory} = this.props.livestock;
     // console.log('dataLivestockCat', dataLivestockCat);
     return (
-      <View style={{backgroundColor: colorCSS.white}}>
+      <View style={{backgroundColor: colorCSS.greenlogo, flex: 1}}>
+        <Text style={design.textHeader}>AYOvest</Text>
         <View
-          style={{borderBottomWidth: 1, borderBottomColor: 'rgba(0,0,0,0.2)'}}>
-          <Text
-            style={{
-              fontSize: 30,
-              textAlign: 'center',
-              fontWeight: 'bold',
-              color: colorCSS.greenlogo,
-              marginVertical: 6,
-            }}>
-            Categories
-          </Text>
-        </View>
-        <View>
-          <FlatList
-            data={DATA}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => this.props.getLivestockCategory(item.title)}>
-                <View style={{flex: 1, backgroundColor: 'white'}}>
-                  <LinearGradient
-                    colors={['transparent', colorCSS.gray, colorCSS.black]}
-                    style={{
-                      useAngle: true,
-                      angle: 90,
-                      angleCenter: {x: 0.5, y: 0.5},
-                    }}>
-                    <Image
-                      style={{
-                        width: width * 1.2,
-                        height: width * 0.39,
-                        alignSelf: 'center',
-                        opacity: 0.7,
-                      }}
-                      source={item.image}
-                    />
-                  </LinearGradient>
-                  <Text
-                    style={{
-                      color: 'white',
-                      position: 'absolute',
-                      fontSize: 30,
-                      fontWeight: 'bold',
-                      marginTop: 40,
-                      marginLeft: 20,
-                      textShadowColor: 'rgba(0, 0, 0, 0.25)',
-                      textShadowOffset: {width: 1, height: 1},
-                      textShadowRadius: 5,
-                    }}>
-                    {item.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}
-            keyExtractor={item => item.id}
-          />
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 20,
+          }}>
+          <View style={design.topContainer}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => this.props.getLivestockCategory('cow')}>
+              <View style={design.boxContainer}>
+                <Image
+                  source={require('../../../assets/img/cowIcon.png')}
+                  tintColor="white"
+                  style={design.imageCategory}
+                />
+                <Text style={design.textCategory}>Cow</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => this.props.getLivestockCategory('chicken')}>
+              <View style={design.boxContainer}>
+                <Image
+                  source={require('../../../assets/img/chickenIcon.png')}
+                  tintColor="white"
+                  style={design.imageCategory}
+                />
+                <Text style={design.textCategory}>Chicken</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={design.bottomContainer}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => this.props.getLivestockCategory('goat')}>
+              <View style={design.boxContainer}>
+                <Image
+                  source={require('../../../assets/img/goatIcon.png')}
+                  tintColor="white"
+                  style={design.imageCategory}
+                />
+                <Text style={design.textCategory}>Goat</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => this.props.getLivestockCategory('duck')}>
+              <View style={design.boxContainer}>
+                <Image
+                  source={require('../../../assets/img/duckIcon.png')}
+                  tintColor="white"
+                  style={design.imageCategory}
+                />
+                <Text style={design.textCategory}>Duck</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         <Modal isVisible={modalCategory} style={{margin: 0}}>
           <ComCategoryModal />

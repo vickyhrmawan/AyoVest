@@ -72,12 +72,12 @@ const Tabs = createBottomTabNavigator(
         title: 'Commodity List',
       },
     },
-    News: {
-      screen: News,
+    Profile: {
+      screen: Profile,
       navigationOptions: {
-        tabBarLabel: 'News',
+        tabBarLabel: 'Profile',
         tabBarIcon: ({tintColor}) => (
-          <Icon name="newspaper-o" size={20} color={tintColor} />
+          <Icon name="user" size={20} color={tintColor} />
         ),
       },
     },

@@ -1,129 +1,233 @@
 import React, {Component} from 'react';
-import {Text, View, Button, TouchableOpacity, Image} from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {setModalDetail, getLivestockId} from '../redux/action/LivestockAction';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {design} from '../Auth/css/Styles';
+import colorCSS from '../Auth/css/Color';
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 class ComDetailModal extends Component {
-  // componentDidMount() {
-  //   this.props.getLivestockId();
-  // }
+  state = {
+    show: true,
+  };
+
+  ShowHideComponent = value => {
+    this.setState({show: value});
+  };
 
   render() {
+    console.log('details', this.state.show);
     const {dataLivestockID, isLoading} = this.props.livestock;
     console.log('thisis', dataLivestockID);
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <View style={{flex: 1}}>
+          <Text style={design.textHeader}>AYOvest</Text>
+
           <Image
             style={{
-              width: '100%',
-              resizeMode: 'cover',
-              position: 'absolute',
-              height: 250,
+              width: width / 1.0625,
+              height: width / 1.75,
               alignSelf: 'center',
-              top: 30,
-              borderWidth: 4,
-              borderRadius: 20,
-              shadowColor: 'rgba(0, 0, 0, 0.25)',
-              shadowOffset: {width: 3, height: 3},
-              shadowRadius: 10,
+              margin: 10,
+              borderRadius: 5,
             }}
             source={{uri: dataLivestockID.image}}
           />
           <View>
             <Text
               style={{
-                // position: 'absolute',
-                backgroundColor: 'white',
                 paddingHorizontal: 20,
                 paddingVertical: 10,
-                marginHorizontal: 30,
-                borderRadius: 20,
-                fontSize: 25,
+                fontSize: 22,
                 textAlign: 'center',
-                shadowColor: '#000',
-                shadowOffset: {width: 1, height: 2},
-                shadowOpacity: 0.9,
-                shadowRadius: 3,
-                elevation: 2,
+                fontFamily: 'poppins',
               }}>
               {dataLivestockID.name}
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: 'center',
+                marginVertical: 10,
+                fontFamily: 'poppins',
+              }}>
+              {dataLivestockID.city}, {dataLivestockID.province},{' '}
+              {dataLivestockID.country}
             </Text>
           </View>
         </View>
         <View
           style={{
-            flex: 2,
-            backgroundColor: 'white',
-            marginHorizontal: 30,
-            borderRadius: 20,
-            padding: 15,
-            marginTop: 50,
-            bottom: 20,
-            shadowColor: '#000',
-            shadowOffset: {width: 0, height: 2},
-            shadowOpacity: 0.8,
-            shadowRadius: 2,
-            elevation: 1,
+            flexDirection: 'row',
+            alignSelf: 'center',
           }}>
-          <Text style={{fontSize: 20}}>Price / Unit</Text>
-          <Text style={{fontSize: 35, color: '#00a0a8'}}>
-            SGD {dataLivestockID.priceUnit}
-          </Text>
-          <Text style={{fontSize: 20}}>Return</Text>
-          <Text style={{fontSize: 20, color: '#00a0a8'}}>
-            {dataLivestockID.roi} % / year
-          </Text>
-          <Text style={{fontSize: 20}}>Contract Period</Text>
-          <Text style={{fontSize: 20, color: '#00a0a8'}}>
-            {dataLivestockID.contractPeriod} Years
-          </Text>
-          <Text style={{fontSize: 20, marginVertical: 25}}>
-            {dataLivestockID.description}
-          </Text>
-
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-              <Text style={{fontSize: 20}}>Total Unit</Text>
-              <Text style={{fontSize: 20, color: '#00a0a8'}}>
-                {dataLivestockID.totalUnit}
-              </Text>
-            </View>
-            <View style={{flex: 2}}>
-              <Text style={{fontSize: 18, textAlign: 'right'}}>
-                {dataLivestockID.city}, {dataLivestockID.province}
-              </Text>
-              <Text style={{fontSize: 18, textAlign: 'right'}}>
-                {dataLivestockID.address}
-              </Text>
-            </View>
+          <View style={{width: width / 1.75}}>
+            <Text
+              style={{fontSize: 16, marginVertical: 3, fontFamily: 'poppins'}}>
+              Price Unit
+            </Text>
+            <Text
+              style={{fontSize: 16, marginVertical: 3, fontFamily: 'poppins'}}>
+              Contract
+            </Text>
+            <Text
+              style={{fontSize: 16, marginVertical: 3, fontFamily: 'poppins'}}>
+              Return/Year
+            </Text>
+            <Text
+              style={{fontSize: 16, marginVertical: 3, fontFamily: 'poppins'}}>
+              Unit
+            </Text>
           </View>
-          <TouchableOpacity>
+          <View>
             <Text
               style={{
-                // backgroundColor: 'turquoise',
-                paddingHorizontal: 10,
-                paddingVertical: 10,
-                marginHorizontal: 50,
-                marginTop: 40,
-                borderColor: '#00a0a8',
-                borderWidth: 1,
-                borderRadius: 20,
-                fontSize: 20,
-                textAlign: 'center',
-                color: '#00a0a8',
+                fontSize: 16,
+                color: colorCSS.greenlogo,
+                marginVertical: 3,
+                fontFamily: 'poppins',
               }}>
-              INVEST
+              S$ {dataLivestockID.priceUnit}
             </Text>
-          </TouchableOpacity>
+            <Text
+              style={{fontSize: 16, marginVertical: 3, fontFamily: 'poppins'}}>
+              {dataLivestockID.contractPeriod} years
+            </Text>
+            <Text
+              style={{fontSize: 16, marginVertical: 3, fontFamily: 'poppins'}}>
+              {dataLivestockID.roi} %
+            </Text>
+            <Text
+              style={{fontSize: 16, marginVertical: 3, fontFamily: 'poppins'}}>
+              {dataLivestockID.totalUnit}
+            </Text>
+          </View>
         </View>
+
+        <View style={{flex: 2, marginHorizontal: 20}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: 30,
+              alignSelf: 'center',
+            }}>
+            <TouchableOpacity
+              disabled={this.state.show === true ? true : false}
+              onPress={() => this.ShowHideComponent(!this.state.show)}
+              style={{
+                borderColor:
+                  this.state.show === true ? colorCSS.greenlogo : colorCSS.gray,
+                width: width / 2.5,
+                borderBottomWidth: this.state.show === true ? 2 : 1,
+              }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                  fontSize: 16,
+                  marginVertical: 3,
+                  fontFamily: 'poppins',
+                  textAlign: 'center',
+                  color:
+                    this.state.show === true
+                      ? colorCSS.greenlogo
+                      : colorCSS.gray,
+                }}>
+                Details
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={
+                this.state.show === true ? !this.state.show : !this.state.show
+              }
+              onPress={() => this.ShowHideComponent(!this.state.show)}
+              style={{
+                borderColor:
+                  this.state.show === true ? colorCSS.gray : colorCSS.greenlogo,
+                width: width / 2.5,
+                borderBottomWidth: this.state.show === true ? 1 : 2,
+              }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                  fontSize: 16,
+                  marginVertical: 3,
+                  fontFamily: 'poppins',
+                  textAlign: 'center',
+                  color:
+                    this.state.show === true
+                      ? colorCSS.gray
+                      : colorCSS.greenlogo,
+                }}>
+                Prediction
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            {this.state.show ? (
+              <Text
+                style={{
+                  fontSize: 16,
+                  marginVertical: 3,
+                  fontFamily: 'poppins',
+                }}>
+                {dataLivestockID.description}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: 16,
+                  marginVertical: 3,
+                  fontFamily: 'poppins',
+                }}>
+                {dataLivestockID.priceUnit}
+              </Text>
+            )}
+          </View>
+        </View>
+        <TouchableOpacity>
+          <Text
+            style={{
+              backgroundColor: colorCSS.greenlogo,
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+              marginHorizontal: 50,
+              marginTop: 40,
+              borderColor: colorCSS.white,
+              borderWidth: 1,
+              borderRadius: 20,
+              fontSize: 20,
+              textAlign: 'center',
+              color: colorCSS.white,
+            }}>
+            INVEST
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => this.props.setModalDetail()}
-          style={{position: 'absolute', alignSelf: 'flex-end'}}>
-          <Icon name="cross" size={40} color="#00a0a8" />
+          style={{
+            position: 'absolute',
+            alignSelf: 'flex-start',
+            top: 5,
+            padding: 5,
+          }}>
+          <Icon name="arrowleft" size={30} color="white" />
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }

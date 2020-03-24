@@ -9,6 +9,7 @@ import {
   Image,
   Dimensions,
   ActivityIndicator,
+  Animated,
 } from 'react-native';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
@@ -26,6 +27,7 @@ import {
 import {getToken} from '../../redux/action/AuthAction';
 
 const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 class Home extends Component {
   state = {
@@ -33,6 +35,8 @@ class Home extends Component {
     title: '',
     searchInput: [],
     searchData: [],
+    show: true,
+    searchAnimated: new Animated.Value(0),
   };
 
   _searchingData(text) {
@@ -45,6 +49,15 @@ class Home extends Component {
     });
     this.setState({searchData: catchData});
   }
+
+  ShowHideComponent = () => {
+    if (this.state.show == true) {
+      this.setState({show: false});
+      this.showSearchBar();
+    } else {
+      this.setState({show: true, searchAnimated: new Animated.Value(0)});
+    }
+  };
 
   async componentDidMount() {
     this.props.getLivestock();
@@ -66,6 +79,13 @@ class Home extends Component {
     );
   }
 
+  showSearchBar = () => {
+    Animated.timing(this.state.searchAnimated, {
+      toValue: width - 20,
+      duration: 300,
+    }).start();
+  };
+
   render() {
     const {
       dataLivestock,
@@ -74,105 +94,195 @@ class Home extends Component {
       hasNextPage,
       nextPage,
     } = this.props.livestock;
-    const {myToken} = this.props.auth;
-    console.log('tokenku', myToken);
+    const {myToken, user} = this.props.auth;
+    console.log('profile', user);
     if (isLoading === true) {
       return <LoadingScreen />;
     }
+
     return (
-      <View style={{flex: 1}}>
-        {/* <View style={{flex: 1, marginTop: 20}}>
-          <Swiper
-            showsButtons={false}
-            dot={
-              <View
-                style={{
-                  backgroundColor: colorCSS.gray,
-                  width: 8,
-                  height: 8,
-                  borderRadius: 7,
-                  marginLeft: 7,
-                  marginRight: 7,
-                }}
-              />
-            }
-            activeDot={
-              <View
-                style={{
-                  backgroundColor: colorCSS.greenlogo,
-                  width: 8,
-                  height: 8,
-                  borderRadius: 7,
-                  marginLeft: 7,
-                  marginRight: 7,
-                }}
-              />
-            }>
-            <View
-              style={{
-                alignItems: 'center',
-                marginHorizontal: 10,
-                elevation: 10,
-              }}>
-              <Icon
-                name="bar-graph"
-                size={150}
-                style={{color: colorCSS.greenlogo}}
-              />
-              <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-                Buy Livestock Investments
-              </Text>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                Choose from all variant of Livestock. Discover a lot of
-                opportunities regarding Investment just by browsing it through
-                your phone.
-              </Text>
-            </View>
-            <View style={{alignItems: 'center', marginHorizontal: 10}}>
-              <Icon
-                name="circular-graph"
-                size={150}
-                style={{color: colorCSS.greenlogo}}
-              />
-              <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-                Get High Return
-              </Text>
-              <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                Everyone is mutually profited. Get profit periodically and track
-                your investment from this app.
-              </Text>
-            </View>
-          </Swiper>
-        </View> */}
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colorCSS.white,
+        }}>
         <View
           style={{
-            height: 50,
+            width: width / 1.5,
+            height: width / 1.5,
+            backgroundColor: colorCSS.greenlogo,
+            borderRadius: 110,
+            transform: [{scaleX: 2}],
+            alignSelf: 'center',
+            top: -width / 5,
+            position: 'absolute',
+          }}></View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            zIndex: 1000,
+            paddingHorizontal: 20,
+          }}>
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+            }}
+            onPress={() => this.props.navigation.openDrawer()}>
+            <Icon name="menu" size={30} color={colorCSS.white} />
+          </TouchableOpacity>
+          <View>
+            <Text style={design.textHeader}>AYOvest</Text>
+          </View>
+          {this.state.show ? (
+            <TouchableOpacity
+              style={{
+                justifyContent: 'center',
+              }}
+              onPress={() => this.ShowHideComponent()}>
+              <Icon name="magnifying-glass" size={30} color={colorCSS.white} />
+            </TouchableOpacity>
+          ) : (
+            <Animated.View
+              style={{
+                position: 'absolute',
+                backgroundColor: colorCSS.white,
+                borderRadius: 10,
+                width: this.state.searchAnimated,
+                left: 10,
+                top: 10,
+                // marginHorizontal: 10,
+              }}>
+              <TextInput
+                placeholder="Search"
+                style={{
+                  fontSize: 15,
+                  paddingLeft: 15,
+                  // margin: 10,
+                  // height: 35,
+                  // marginTop: 20,
+                }}
+                onChangeText={text => this._searchingData(text)}
+              />
+              <TouchableOpacity
+                style={{
+                  alignSelf: 'flex-end',
+                  position: 'absolute',
+                }}
+                onPress={() => this.ShowHideComponent()}>
+                <Icon name="cross" size={30} color={colorCSS.gray} />
+              </TouchableOpacity>
+            </Animated.View>
+          )}
+          {/* <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+            }}
+            onPress={() => this.ShowHideComponent()}>
+            <Icon name="magnifying-glass" size={30} color={colorCSS.white} />
+          </TouchableOpacity> */}
+        </View>
+        <View
+          style={{
+            height: height / 8,
             backgroundColor: 'white',
             flexDirection: 'row',
-            padding: 5,
+            padding: 15,
             alignItems: 'center',
-            borderWidth: 1,
-            borderRadius: 30,
-            marginLeft: 10,
-            marginRight: 10,
-            marginTop: 30,
+            justifyContent: 'space-evenly',
+            borderRadius: 10,
+            marginHorizontal: 20,
+            marginTop: height / 10,
+            elevation: 10,
           }}>
-          <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
-            <Icon name="menu" style={{fontSize: 25, marginLeft: 20}} />
-          </TouchableOpacity>
-          <TextInput
-            placeholder="Search"
-            style={{fontSize: 15, paddingLeft: 15}}
-            onChangeText={text => this._searchingData(text)}
-          />
+          {/* <View style={{flex: 1}}>
+            <TextInput
+              placeholder="Search"
+              style={{fontSize: 15, paddingLeft: 15}}
+              onChangeText={text => this._searchingData(text)}
+            />
+          </View> */}
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginHorizontal: 20,
+            }}>
+            <View style={{flex: 0}}>
+              <Image
+                source={require('../../../assets/img/investor.png')}
+                style={{height: width / 9, width: width / 9}}
+              />
+            </View>
+            <View
+              style={{
+                // flex: 1,
+                justifyContent: 'center',
+                paddingHorizontal: 10,
+              }}>
+              <Text
+                style={{
+                  lineHeight: height / 35,
+                  letterSpacing: 0.5,
+                  fontSize: 20,
+                  color: 'green',
+                }}>
+                1500{' '}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: 'green',
+                }}>
+                investors{' '}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginHorizontal: 20,
+            }}>
+            <View style={{flex: 0}}>
+              <Image
+                source={require('../../../assets/img/breeder.png')}
+                style={{height: width / 9, width: width / 9}}
+              />
+            </View>
+            <View
+              style={{
+                // flex: 1,
+                justifyContent: 'center',
+                paddingHorizontal: 10,
+              }}>
+              <Text
+                style={{
+                  lineHeight: height / 35,
+                  letterSpacing: 0.5,
+                  fontSize: 20,
+                  color: 'green',
+                }}>
+                285{' '}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: 'green',
+                }}>
+                breeders{' '}
+              </Text>
+            </View>
+          </View>
         </View>
-        <View style={{flex: 1}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 20}}>
-            Newest Commodity
+        <View style={{flex: 1, marginHorizontal: 10}}>
+          <Text style={{fontSize: 20, textAlign: 'center', marginVertical: 15}}>
+            Popular Livestock
           </Text>
 
           <FlatList
-            numColumns={2}
             horizontal={false}
             data={
               this.state.searchInput.length > 3
@@ -186,38 +296,81 @@ class Home extends Component {
             onEndReachedThreshold={0.5}
             renderItem={({item}) => (
               <TouchableOpacity
-                style={{width: width / 2}}
+                // style={{width: width / 2}}
                 onPress={() => this.props.getLivestockId(item._id)}>
-                <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    marginVertical: 10,
+                    marginHorizontal: 10,
+                  }}>
                   <View
                     style={{
-                      marginHorizontal: 10,
-                      marginVertical: 10,
+                      flex: 0,
+
+                      // padding: 10,
                     }}>
                     <Image
                       style={{
-                        width: '100%',
+                        width: width / 2.25,
                         resizeMode: 'cover',
-                        height: 200,
+                        height: width / 3,
                         alignSelf: 'center',
-                        borderRadius: 20,
+                        borderTopLeftRadius: 15,
+                        borderBottomLeftRadius: 15,
                       }}
                       source={{uri: item.image}}
                     />
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: colorCSS.white,
+                      width: width / 2,
+                      borderTopRightRadius: 15,
+                      borderBottomRightRadius: 15,
+                      flex: 1,
+                      borderTopWidth: 1,
+                      borderTopColor: 'rgba(0,0,0,0.3)',
+                      borderBottomWidth: 1,
+                      borderBottomColor: 'rgba(0,0,0,0.3)',
+                      borderRightWidth: 1,
+                      borderRightColor: 'rgba(0,0,0,0.3)',
+                    }}>
+                    <Text style={design.flatlistTitle}>{item.name}</Text>
                     <View
                       style={{
-                        position: 'absolute',
-                        backgroundColor: colorCSS.greenlogotransparent,
-                        bottom: 0,
-                        left: 0,
-                        width: '100%',
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
+                        flexDirection: 'row',
+                        // alignContent: 'space-between',
                       }}>
-                      <Text style={design.flatlistTitle}>{item.name}</Text>
-                      <Text style={design.flatlistNumber}>
-                        S$ {item.priceUnit}
-                      </Text>
+                      <View style={{width: width / 4.25}}>
+                        <Text style={design.flatlistText}>price/unit</Text>
+                        <Text style={design.flatlistNumber}>
+                          S$ {item.priceUnit}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={design.flatlistText}>contract</Text>
+                        <Text style={design.flatlistNumber}>
+                          {item.contractPeriod} years
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignContent: 'space-around',
+                      }}>
+                      <View style={{width: width / 4.25}}>
+                        <Text style={design.flatlistText}>return/year</Text>
+                        <Text style={design.flatlistNumber}>{item.roi}%</Text>
+                      </View>
+                      <View>
+                        <Text style={design.flatlistText}>unit</Text>
+                        <Text style={design.flatlistNumber}>
+                          {item.totalUnit}
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
