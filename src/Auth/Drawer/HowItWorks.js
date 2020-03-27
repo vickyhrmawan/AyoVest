@@ -1,146 +1,88 @@
 import React, {Component} from 'react';
-import {Text, View, Image, Dimensions, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
+import {design} from '../css/Styles';
+import colorCSS from '../css/Color';
+import Swiper from 'react-native-swiper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default class HowItWorks extends Component {
   render() {
     return (
-      <ScrollView style={{backgroundColor: 'white'}}>
-        <Image
-          source={require('../../../assets/img/ayovest-logo.png')}
-          style={{
-            width: 280,
-            height: 200,
-            alignSelf: 'center',
-            marginVertical: 30,
-          }}
-        />
-        <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-
-            alignItems: 'center',
-            marginHorizontal: 20,
-          }}>
-          <View style={{flex: 0}}>
+      <View style={{backgroundColor: 'white', flex: 1}}>
+        <Text style={design.textHeader}>How It Works</Text>
+        <Swiper showsButtons={false}>
+          <View style={design.slide}>
             <Image
-              source={require('../../../assets/img/pickfield.jpg')}
-              style={{height: 110, width: 110}}
+              source={require('../../../assets/img/howitworks4.png')}
+              style={{width: width / 1.75, height: width / 2.3}}
             />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              paddingHorizontal: width / 20,
-            }}>
-            <Text
-              style={{
-                lineHeight: height / 35,
-                letterSpacing: 0.5,
-                fontSize: 20,
-                color: 'green',
-              }}>
-              Pick all varieties of Livestock that you want{' '}
+            <Text style={design.sliderText}>
+              Pick what you like from all Livestock varieties that are available
             </Text>
           </View>
-        </View>
-        <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-
-            alignItems: 'center',
-            marginHorizontal: 20,
-          }}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              paddingHorizontal: width / 20,
-            }}>
-            <Text
-              style={{
-                lineHeight: height / 35,
-                letterSpacing: 0.5,
-                fontSize: 20,
-                color: 'green',
-              }}>
-              Pick what you like and start investing{' '}
+          <View style={design.slide}>
+            <Image
+              source={require('../../../assets/img/howitworks2.png')}
+              style={{width: width / 2, height: width / 2.1}}
+            />
+            <Text style={design.sliderText}>
+              {' '}
+              Choose one and start investing
             </Text>
           </View>
-          <View style={{flex: 0}}>
+          <View style={design.slide}>
             <Image
-              source={require('../../../assets/img/picklivestock.jpg')}
-              style={{height: 110, width: 110}}
+              source={require('../../../assets/img/howitworks3.png')}
+              style={{width: width / 2, height: width / 2}}
             />
+            <Text style={design.sliderText}>The money will works for you</Text>
           </View>
-        </View>
-        <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-
-            alignItems: 'center',
-            marginHorizontal: 20,
-          }}>
-          <View style={{flex: 0}}>
+          <View style={design.slide}>
             <Image
-              source={require('../../../assets/img/pickfarmer.jpg')}
-              style={{height: 110, width: 110}}
+              source={require('../../../assets/img/howitworks1.png')}
+              style={{width: width / 2, height: width / 2.1}}
             />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              paddingHorizontal: width / 20,
-            }}>
-            <Text
-              style={{
-                lineHeight: height / 35,
-                letterSpacing: 0.5,
-                fontSize: 20,
-                color: 'green',
-              }}>
-              The breeder will do his utmost to take care of your investments{' '}
+            <Text style={design.sliderText}>
+              Get profit profit and profit after certain time!
             </Text>
           </View>
-        </View>
-        <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-
-            alignItems: 'center',
-            marginHorizontal: 20,
-          }}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              paddingHorizontal: width / 20,
-            }}>
-            <Text
-              style={{
-                lineHeight: height / 35,
-                letterSpacing: 0.5,
-                fontSize: 20,
-                color: 'green',
-              }}>
-              Get profit profit and profit after certain time!{' '}
-            </Text>
-          </View>
-          <View style={{flex: 0}}>
-            <Image
-              source={require('../../../assets/img/pickgrass.jpg')}
-              style={{height: 110, width: 110}}
-            />
-          </View>
-        </View>
-      </ScrollView>
+        </Swiper>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5',
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+});

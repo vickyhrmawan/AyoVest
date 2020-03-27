@@ -7,11 +7,19 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  Dimensions,
+  Image,
+  ImageBackground,
 } from 'react-native';
 import {register} from '../../redux/action/AuthAction';
 import {connect} from 'react-redux';
 import {design} from '../css/Styles';
 import Loadingscreen from '../css/Loadingscreen';
+import colorCSS from '../css/Color';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 class Register extends Component {
   constructor(props) {
@@ -35,44 +43,44 @@ class Register extends Component {
         style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}
         behavior="padding"
         enabled>
-        <ScrollView>
+        <ImageBackground
+          source={require('../../../assets/img/backgroundayo.jpg')}
+          style={{flex: 1, resizeMode: 'cover', justifyContent: 'center'}}>
           <Loadingscreen visible={this.props.auth.isloading} />
-          <Text
+          <Image
+            source={require('../../../assets/img/AYOvest.png')}
             style={{
-              fontSize: 30,
-              fontWeight: 'bold',
-              marginLeft: 15,
-              marginBottom: 50,
-              marginTop: 30,
-            }}>
-            Register{' '}
-          </Text>
-          <Text style={{marginLeft: 20, fontSize: 20}}>Full Name</Text>
+              marginVertical: width / 15,
+              width: width / 1.7,
+              height: width / 9,
+              alignSelf: 'center',
+            }}
+            tintColor="white"
+          />
+          <Text style={design.textTitle}>Full Name</Text>
           <TextInput
             onChangeText={value => this.setState({fullname: value})}
             style={design.textInput}
           />
-          <Text style={{marginLeft: 20, fontSize: 20}}>Email Adress</Text>
+          <Text style={design.textTitle}>Email Adress</Text>
           <TextInput
             keyboardType="email-address"
             style={design.textInput}
             onChangeText={value => this.setState({email: value})}
           />
-          <Text style={{marginLeft: 20, fontSize: 20}}>Phone Number</Text>
+          <Text style={design.textTitle}>Phone Number</Text>
           <TextInput
             keyboardType="number-pad"
             style={design.textInput}
             onChangeText={value => this.setState({phone_number: value})}
           />
-          <Text style={{marginLeft: 20, fontSize: 20}}>Password</Text>
+          <Text style={design.textTitle}>Password</Text>
           <TextInput
             onChangeText={value => this.setState({password: value})}
             secureTextEntry
             style={design.textInput}
           />
-          <Text style={{marginLeft: 20, fontSize: 20}}>
-            Password Confirmation
-          </Text>
+          <Text style={design.textTitle}>Password Confirmation</Text>
           <TextInput
             onChangeText={value =>
               this.setState({password_confirmation: value})
@@ -80,37 +88,77 @@ class Register extends Component {
             secureTextEntry
             style={design.textInput}
           />
-
-          <TouchableOpacity
+          <View
             style={{
-              backgroundColor: '#20cb9d',
-              alignItems: 'center',
-              paddingVertical: 10,
-              margin: 20,
-            }}
-            onPress={() =>
-              this.props.register(
-                this.state.fullname,
-                this.state.email,
-                this.state.phone_number,
-                this.state.password,
-                this.state.password_confirmation,
-              )
-            }>
-            <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-              Register
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginVertical: width / 12,
+            }}>
+            <Text
+              style={{
+                fontFamily: 'poppins',
+                fontSize: width / 8,
+                color: colorCSS.white,
+              }}>
+              Sign Up
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Login')}>
-            <Text style={{textAlign: 'center', fontSize: 17}}>
-              Already have an account?{' '}
-              <Text style={{color: 'green', fontWeight: 'bold'}}>
-                Login Now
+            <TouchableOpacity
+              style={{
+                width: width / 5,
+                height: width / 5,
+                backgroundColor: colorCSS.white,
+                padding: 15,
+                borderRadius: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() =>
+                this.props.register(
+                  this.state.fullname,
+                  this.state.email,
+                  this.state.phone_number,
+                  this.state.password,
+                  this.state.password_confirmation,
+                )
+              }>
+              <Icon name="arrow-right" size={30} color={colorCSS.greenlogo} />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginVertical: width / 25,
+            }}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Login')}>
+              <Text
+                style={{
+                  color: colorCSS.white,
+                  fontFamily: 'poppins',
+                  textAlign: 'left',
+                  fontSize: 17,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colorCSS.white,
+                }}>
+                Sign In
               </Text>
-            </Text>
-          </TouchableOpacity>
-        </ScrollView>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: colorCSS.white,
+                  fontFamily: 'poppins',
+                  textAlign: 'right',
+                  fontSize: 17,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colorCSS.white,
+                }}>
+                Forgot password
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
       </KeyboardAvoidingView>
     );
   }

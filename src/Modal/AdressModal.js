@@ -11,7 +11,7 @@ const height = Dimensions.get('window').height;
 
 class AdressModal extends Component {
   render() {
-    const {user} = this.props.auth;
+    const {profile} = this.props.auth;
 
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -66,7 +66,7 @@ class AdressModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.country}
+                {profile.country}
               </Text>
             </View>
           </View>
@@ -97,7 +97,7 @@ class AdressModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.province}
+                {profile.province}
               </Text>
             </View>
           </View>
@@ -128,7 +128,7 @@ class AdressModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.city}
+                {profile.city}
               </Text>
             </View>
           </View>
@@ -159,7 +159,7 @@ class AdressModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.address}
+                {profile.address}
               </Text>
             </View>
           </View>
@@ -190,7 +190,7 @@ class AdressModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.postalcode}
+                {profile.postal_code + ''}
               </Text>
             </View>
           </View>

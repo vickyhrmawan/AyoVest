@@ -24,15 +24,15 @@ class DrawerScreen extends Component {
     console.log(myToken);
 
     return (
-      // <View style={{flex: 1, backgroundColor: colorCSS.greenlogo}}>
-      <LinearGradient
+      <View style={{flex: 1}}>
+        {/* <LinearGradient
         colors={[
           colorCSS.greenlogo,
           colorCSS.greenlogo,
           colorCSS.greenlogo1,
           colorCSS.greenlogo2,
         ]}
-        style={{flex: 1, opacity: 0.7}}>
+        style={{flex: 1, opacity: 0.7}}> */}
         <View
           style={{
             flex: 1,
@@ -44,7 +44,7 @@ class DrawerScreen extends Component {
           {/* <Text style={design.profileName}>Agus Mulyono</Text> */}
         </View>
         <View style={{flex: 3}}>
-          <View>
+          {/* <View>
             <Text
               onPress={
                 myToken !== 'guest'
@@ -54,33 +54,52 @@ class DrawerScreen extends Component {
               style={design.menuList}>
               <Icon name="user" size={20} /> My Profile
             </Text>
+          </View> */}
+          <View>
+            {myToken === 'guest' ? (
+              <Text
+                onPress={this.navigateToScreen('Login')}
+                style={design.menuList}>
+                <Icon name="sign-in" size={20} color={colorCSS.greenlogo} />
+                {'    '}
+                Login
+              </Text>
+            ) : null}
           </View>
           <View>
             <Text
               onPress={this.navigateToScreen('HowItWorks')}
               style={design.menuList}>
-              <Icon name="file-text-o" size={20} /> How it works
+              <Icon name="file-text-o" size={20} color={colorCSS.greenlogo} />
+              {'    '} How it works
             </Text>
           </View>
           <View>
             <Text
               onPress={this.navigateToScreen('AboutUs')}
               style={design.menuList}>
-              <Icon name="building" size={20} /> About Us
+              <Icon name="building" size={20} color={colorCSS.greenlogo} />
+              {'    '} About Us
             </Text>
           </View>
           <View>
             <Text
               onPress={this.navigateToScreen('ContactUs')}
               style={design.menuList}>
-              <Icon name="phone-square" size={20} /> Contact Us
+              <Icon name="phone-square" size={20} color={colorCSS.greenlogo} />
+              {'    '} Contact Us
             </Text>
           </View>
           <View>
             <Text
               onPress={this.navigateToScreen('Help')}
               style={design.menuList}>
-              <Icon name="question-circle-o" size={20} /> Help
+              <Icon
+                name="question-circle-o"
+                size={20}
+                color={colorCSS.greenlogo}
+              />
+              {'    '} Help
             </Text>
           </View>
           <View>
@@ -94,13 +113,13 @@ class DrawerScreen extends Component {
                   })
                 }
                 style={design.menuList}>
-                <Icon name="power-off" size={20} /> Logout
+                <Icon name="power-off" size={20} color={colorCSS.greenlogo} />
+                {'    '} Logout
               </Text>
             ) : null}
           </View>
         </View>
-        {/* </View> */}
-      </LinearGradient>
+      </View>
     );
   }
 }

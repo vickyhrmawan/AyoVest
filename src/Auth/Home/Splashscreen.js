@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, Image, Dimensions} from 'react-native';
+import colorCSS from '../css/Color';
 
 class Splashscreen extends Component {
   performTimeConsumingTask = async () => {
@@ -25,8 +26,8 @@ class Splashscreen extends Component {
     return (
       <View style={styles.viewStyles}>
         <Image
-          source={require('../../../assets/img/ayovest-logo.png')}
-          style={{width: 320, height: 230}}
+          source={require('../../../assets/img/AYOvest.png')}
+          style={{width: width / 1.5, height: width / 8}}
         />
       </View>
     );

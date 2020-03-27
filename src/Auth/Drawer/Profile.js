@@ -4,9 +4,9 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView,
   Text,
   Dimensions,
+  FlatList,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
@@ -14,11 +14,18 @@ import {
   setProfileDetail,
   setAdressDetail,
   setUpdateProfile,
+  uploadImage,
+  getProfile,
 } from '../../redux/action/AuthAction';
+import {
+  getInvestment,
+  getInvestmentID,
+} from '../../redux/action/LivestockAction';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
 import ProfileModal from '../../Modal/ProfileModal';
 import AdressModal from '../../Modal/AdressModal';
+import BillingModal from '../../Modal/BillingModal';
 import UpdateProfileModal from '../../Modal/UpdateProfileModal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImagePicker from 'react-native-image-picker';
@@ -26,49 +33,41 @@ import ImagePicker from 'react-native-image-picker';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const uploadImage = props => {
-  const options = {
-    title: 'Select Avatar',
-    customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
-    storageOptions: {
-      skipBackup: true,
-      path: 'images',
-    },
-  };
-
-  /**
-   * The first arg is the options object for customization (it can also be null or omitted for default options),
-   * The second arg is the callback which sends object: response (more info in the API Reference)
-   */
-  ImagePicker.showImagePicker(options, response => {
-    console.log('Response = ', response);
-
-    if (response.didCancel) {
-      console.log('User cancelled image picker');
-    } else if (response.error) {
-      console.log('ImagePicker Error: ', response.error);
-    } else if (response.customButton) {
-      console.log('User tapped custom button: ', response.customButton);
-    } else {
-      const source = {uri: response.uri};
-
-      // You can also display the image using data:
-      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-      this.setState({
-        avatarSource: source,
-      });
-    }
-  });
-};
-
 class Profile extends Component {
   state = {
     show: true,
+    investmentShow: false,
   };
+
   ShowHideComponent = value => {
     this.setState({show: value});
   };
+
+  _imagePicker = () => {
+    const options = {
+      title: 'Select Avatar',
+      customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    /**
+     * The first arg is the options object for customization (it can also be null or omitted for default options),
+     * The second arg is the callback which sends object: response (more info in the API Reference)
+     */
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        this.props.uploadImage(this.props.auth.myToken, response);
+      }
+    });
+  };
+
   render() {
     const {
       myToken,
@@ -76,35 +75,67 @@ class Profile extends Component {
       modalProfile,
       modalAdress,
       modalUpdate,
+      profile,
     } = this.props.auth;
-    console.log('myprofile', myToken);
-    console.log(modalProfile);
+    const {dataInvestment, modalBilling} = this.props.livestock;
+    console.log('tes', profile);
+    // console.log(this.props.auth);
+
     return myToken !== 'guest' && myToken !== undefined ? (
-      <View style={{flex: 1, backgroundColor: colorCSS.white}}>
+      <View style={{backgroundColor: colorCSS.white, flex: 1}}>
         <Text style={design.textHeader}>AYOvest</Text>
-        <View>
+        <View style={{flex: 1}}>
           <View style={{alignItems: 'center'}}>
             <Image
-              style={styles.avatar}
+              style={{
+                width: width / 3,
+                height: width / 3,
+                borderRadius: 63,
+                borderWidth: 4,
+                marginTop: 15,
+              }}
               source={{
-                uri: user.photo_profile,
+                uri: profile.profile_picture,
               }}
             />
             <TouchableOpacity
-              onPress={uploadImage}
+              onPress={() => this._imagePicker()}
               style={{
                 backgroundColor: 'green',
                 borderRadius: 150,
                 padding: 10,
                 alignSelf: 'center',
-                top: -width / 7,
+                top: -width / 8,
                 left: width / 7,
               }}>
               <Icon name="account-edit" size={20} color="white" />
             </TouchableOpacity>
-            <Text style={styles.name}>{user.fullname} </Text>
-            <Text style={styles.userInfo}>{user.role}, </Text>
-            <Text style={styles.userInfo}>2 Investments </Text>
+            <View style={{marginTop: -width / 12}}>
+              <Text
+                style={{
+                  fontFamily: 'poppins',
+                  fontSize: 18,
+                  textAlign: 'center',
+                }}>
+                {profile.fullname}{' '}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'poppins',
+                  fontSize: 15,
+                  textAlign: 'center',
+                }}>
+                {profile.role}, {profile.city}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'poppins',
+                  fontSize: 15,
+                  textAlign: 'center',
+                }}>
+                2 {profile.length} Investments{' '}
+              </Text>
+            </View>
           </View>
           <View
             style={{
@@ -113,14 +144,14 @@ class Profile extends Component {
               alignSelf: 'center',
             }}>
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.props.setProfileDetail()}>
-              <Text style={styles.buttonText}>Profile</Text>
+              style={design.profileButton}
+              onPress={() => this.props.setProfileDetail(myToken)}>
+              <Text style={design.profileButtonText}>Profile</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.button}
+              style={design.profileButton}
               onPress={() => this.props.setAdressDetail()}>
-              <Text style={styles.buttonText}>Adress</Text>
+              <Text style={design.profileButtonText}>Adress</Text>
             </TouchableOpacity>
           </View>
           <View
@@ -128,6 +159,7 @@ class Profile extends Component {
               flexDirection: 'row',
               marginHorizontal: 30,
               alignSelf: 'center',
+              marginVertical: 5,
             }}>
             <TouchableOpacity
               disabled={this.state.show === true ? true : false}
@@ -145,6 +177,8 @@ class Profile extends Component {
                       ? colorCSS.greenlogo
                       : colorCSS.gray,
                   textAlign: 'center',
+                  fontFamily: 'poppins',
+                  fontSize: 15,
                 }}>
                 Investments
               </Text>
@@ -167,116 +201,207 @@ class Profile extends Component {
                       ? colorCSS.gray
                       : colorCSS.greenlogo,
                   textAlign: 'center',
+                  fontFamily: 'poppins',
+                  fontSize: 15,
                 }}>
                 Pending
               </Text>
             </TouchableOpacity>
           </View>
-          <View
+          {/* <View
             style={{
-              marginHorizontal: 20,
+              
               paddingHorizontal: 15,
               marginVertical: 10,
-            }}>
-            {this.state.show ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'center',
-                }}>
-                <View style={{width: width / 1.75}}>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    Price Unit
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    Contract
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    Return/Year
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    Unit
-                  </Text>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: colorCSS.greenlogo,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    S$ price
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    contract years
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    roi %
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginVertical: 3,
-                      fontFamily: 'poppins',
-                    }}>
-                    totalunit
-                  </Text>
-                </View>
-              </View>
-            ) : (
-              <Text
-                style={{
-                  fontSize: 16,
-                  marginVertical: 3,
-                  fontFamily: 'poppins',
-                }}>
-                Pending
-              </Text>
-            )}
-          </View>
+              flex: 1,
+            }}> */}
+          {this.state.show ? (
+            <FlatList
+              data={dataInvestment.filter(
+                item => item.paidStatus === true && item.unit !== 0,
+              )}
+              style={{marginHorizontal: width / 20}}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.getInvestmentID(myToken, item._id);
+                  }}>
+                  <View style={{flexDirection: 'row', marginVertical: 5}}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        elevation: 10,
+                      }}>
+                      <Image
+                        source={{uri: item.livestockId.image}}
+                        style={{width: width / 7, height: width / 4.5}}
+                      />
+                    </View>
+                    <View style={{paddingHorizontal: 10}}>
+                      <Text
+                        style={{
+                          fontFamily: 'poppins',
+                          fontSize: 17,
+                          height: 25,
+                        }}>
+                        {item.livestockName}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: 'poppins',
+                          fontSize: 13,
+                          height: 16,
+                        }}>
+                        {item.livestockId.contractPeriod} Years
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-evenly',
+                          height: 16,
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: 'poppins',
+                            fontSize: 12,
+                            marginRight: 15,
+                          }}>
+                          {item.unit} Unit
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: 'poppins',
+                            fontSize: 12,
+                            marginRight: 15,
+                          }}>
+                          S$ {item.priceUnit}
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: 'poppins',
+                            fontSize: 12,
+                            marginRight: 15,
+                          }}>
+                          Return {item.livestockId.roi} %
+                        </Text>
+                      </View>
+                      <Text
+                        style={{
+                          fontFamily: 'poppins',
+                          fontSize: 17,
+                          height: 25,
+                          color: colorCSS.greenlogo,
+                        }}>
+                        Total Profit S${' '}
+                        {((item.totalPriceUnit * item.livestockId.roi) / 100) *
+                          item.livestockId.contractPeriod}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+              keyExtractor={item => item._id}
+            />
+          ) : (
+            <FlatList
+              data={dataInvestment.filter(
+                item => item.paidStatus === false && item.unit !== 0,
+              )}
+              style={{marginHorizontal: width / 20}}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.getInvestmentID(myToken, item._id);
+                  }}>
+                  <View style={{flexDirection: 'row', marginVertical: 5}}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        elevation: 10,
+                      }}>
+                      <Image
+                        source={{uri: item.livestockId.image}}
+                        style={{width: width / 7, height: width / 4.5}}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        paddingHorizontal: 10,
+                        width: width / 1.5,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: 'poppins',
+                          fontSize: 17,
+                          height: 25,
+                        }}>
+                        {item.livestockName}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: 'poppins',
+                          fontSize: 13,
+                          height: 16,
+                        }}>
+                        {item.livestockId.contractPeriod} Years
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          height: 16,
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: 'poppins',
+                            fontSize: 12,
+                            marginRight: 15,
+                          }}>
+                          {item.unit} Unit
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: 'poppins',
+                            fontSize: 12,
+                            marginRight: 15,
+                          }}>
+                          S$ {item.priceUnit}
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: 'poppins',
+                            fontSize: 12,
+                            marginRight: 15,
+                          }}>
+                          Return {item.livestockId.roi} %
+                        </Text>
+                      </View>
+
+                      <Text
+                        style={{
+                          fontFamily: 'poppins',
+                          fontSize: 17,
+                          height: 25,
+                          color: 'red',
+                        }}>
+                        Pay Now
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+              keyExtractor={item => item._id}
+            />
+          )}
+          {/* </View> */}
         </View>
-        <View>
+        <View style={{alignSelf: 'center'}}>
           <TouchableOpacity
-            style={styles.button}
+            style={design.profileButton}
             onPress={() => this.props.setUpdateProfile()}>
-            <Text style={styles.buttonText}>Update Profile</Text>
+            <Text style={design.profileButtonText}>Edit Profile</Text>
           </TouchableOpacity>
-          {/* <Modal>
-            <Text>Edit Profile</Text>
-            <Text>Name</Text>
-            <Text>Update Profile Picture</Text>
-          </Modal> */}
         </View>
         <Modal isVisible={modalProfile} style={{margin: 0}}>
           <ProfileModal />
@@ -287,80 +412,77 @@ class Profile extends Component {
         <Modal isVisible={modalUpdate} style={{margin: 0}}>
           <UpdateProfileModal />
         </Modal>
+        <Modal isVisible={modalBilling} style={{margin: 0}}>
+          <BillingModal />
+        </Modal>
       </View>
     ) : (
       <View>
-        <Text>Please login to proceed</Text>
+        <Image
+          source={require('../../../assets/img/AYOvest.png')}
+          style={{
+            width: width / 1.7,
+            height: width / 9,
+            alignSelf: 'center',
+            marginTop: width / 8,
+          }}
+        />
+        <Image
+          source={require('../../../assets/img/Group95.png')}
+          style={{
+            width: width / 2.5,
+            height: width / 2.5,
+            alignSelf: 'center',
+            marginTop: width / 15,
+          }}
+        />
+        <Text
+          style={{
+            fontFamily: 'poppins',
+            fontSize: 18,
+            textAlign: 'center',
+            marginVertical: width / 10,
+          }}>
+          Please login to proceed
+        </Text>
         <TouchableOpacity
-          style={styles.button}
+          style={{
+            width: width / 2.75,
+            borderRadius: 7,
+            marginHorizontal: 5,
+            marginTop: 20,
+            paddingVertical: 13,
+            marginBottom: 35,
+            backgroundColor: colorCSS.greenlogo,
+            alignSelf: 'center',
+          }}
           onPress={() => this.props.navigation.navigate('Login')}>
-          <Text>Login</Text>
+          <Text
+            style={{
+              fontFamily: 'poppins',
+              fontSize: 18,
+              textAlign: 'center',
+              color: colorCSS.white,
+            }}>
+            Login
+          </Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    display: 'flex',
-    flex: 1,
-  },
-  headerText: {
-    fontWeight: 'bold',
-    fontFamily: 'Cochin',
-    fontSize: 20,
-    color: '#fff',
-  },
-  // header: {
-  //     backgroundColor: "#ffffff"
-  // },
-  headerContent: {
-    padding: 30,
-    alignItems: 'center',
-  },
-  avatar: {
-    width: width / 3,
-    height: width / 3,
-    borderRadius: 63,
-    borderWidth: 4,
-    marginVertical: 15,
-  },
-  name: {
-    fontSize: 22,
-    color: '#000',
-    fontWeight: '600',
-  },
-  userInfo: {
-    fontSize: 13,
-    color: '#000',
-  },
-  button: {
-    width: width / 2.75,
-    borderRadius: 7,
-    marginHorizontal: 5,
-    marginTop: 20,
-    paddingVertical: 13,
-    marginBottom: 35,
-    backgroundColor: colorCSS.greenlogo,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: colorCSS.white,
-    textAlign: 'center',
-  },
-});
-
 const mapStateToProps = state => ({
   auth: state.auth,
+  livestock: state.livestock,
 });
 
 export default connect(mapStateToProps, {
   setProfileDetail,
   setAdressDetail,
   setUpdateProfile,
+  uploadImage,
+  getInvestment,
+  getProfile,
+  getInvestmentID,
 })(Profile);

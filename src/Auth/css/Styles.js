@@ -5,11 +5,21 @@ const {width} = Dimensions.get('window');
 
 const design = StyleSheet.create({
   //authstyle
+  textTitle: {
+    marginLeft: 20,
+    fontSize: 15,
+    fontFamily: 'poppins',
+    color: colorCSS.white,
+  },
   textInput: {
     borderBottomWidth: 1,
+    borderBottomColor: colorCSS.white,
     marginLeft: 15,
     marginRight: 15,
-    fontSize: 18,
+    fontSize: 15,
+    fontFamily: 'poppins',
+    color: colorCSS.white,
+    maxHeight: 43,
   },
   button: {
     backgroundColor: colorCSS.greenlogo,
@@ -60,26 +70,28 @@ const design = StyleSheet.create({
     fontWeight: 'bold',
   },
   flatlistText: {
-    fontSize: 16,
+    fontSize: width / 30,
     marginLeft: 10,
   },
   flatlistNumber: {
     color: colorCSS.greenlogo,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
     marginLeft: 10,
   },
   //drawerscreen
   menuList: {
-    fontSize: 22,
+    fontSize: 15,
+    fontFamily: 'poppins',
     textAlign: 'left',
-    color: colorCSS.white,
+    color: colorCSS.black,
     marginVertical: 10,
     marginLeft: 20,
   },
   profileName: {
-    fontSize: 22,
-    color: colorCSS.white,
+    fontSize: 15,
+    fontFamily: 'poppins',
+    color: colorCSS.greenlogo,
     bottom: 10,
   },
   //commoditycategory
@@ -135,6 +147,39 @@ const design = StyleSheet.create({
     fontSize: 22,
     lineHeight: 34,
     color: colorCSS.white,
+  },
+  //profile
+  profileButton: {
+    width: width / 2.75,
+    borderRadius: 7,
+    marginHorizontal: 5,
+    marginTop: width / 20,
+    paddingVertical: 13,
+    backgroundColor: colorCSS.greenlogo,
+    marginBottom: 5,
+  },
+  profileButtonText: {
+    fontSize: 16,
+    fontFamily: 'poppins',
+    color: colorCSS.white,
+    textAlign: 'center',
+  },
+  //Billing Modal
+  billingText: {fontFamily: 'poppins', fontSize: 15},
+
+  //swipe
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colorCSS.white,
+  },
+  sliderText: {
+    fontFamily: 'poppins',
+    fontSize: 20,
+    color: colorCSS.black,
+    textAlign: 'center',
+    marginTop: 15,
   },
 });
 

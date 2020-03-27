@@ -11,17 +11,32 @@ import {design} from '../Auth/css/Styles';
 import colorCSS from '../Auth/css/Color';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux';
-import {closeUpdateProfile} from '../redux/action/AuthAction';
+import {closeUpdateProfile, updateProfile} from '../redux/action/AuthAction';
+import {TextInput} from 'react-native-gesture-handler';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 class UpdateProfileModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullname: '',
+      phone_number: '',
+      dob: '',
+      country: '',
+      province: '',
+      city: '',
+      address: '',
+      postal_code: '',
+    };
+  }
   render() {
-    const {user} = this.props.auth;
+    const {profile} = this.props.auth;
+    console.log('fullname', this.state.fullname);
 
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <Text style={design.textHeader}>AYOvest</Text>
         <TouchableOpacity
           onPress={() => this.props.closeUpdateProfile()}
@@ -71,10 +86,12 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.fullname}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.fullname}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({fullname: value})}
+              />
             </View>
           </View>
           <View
@@ -102,10 +119,12 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.phone}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.phone_number}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({phone_number: value})}
+              />
             </View>
           </View>
           <View
@@ -133,10 +152,12 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.dob}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.dob}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({dob: value})}
+              />
             </View>
           </View>
         </View>
@@ -166,10 +187,12 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.country}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.country}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({country: value})}
+              />
             </View>
           </View>
           <View
@@ -197,10 +220,12 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.province}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.province}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({province: value})}
+              />
             </View>
           </View>
           <View
@@ -228,10 +253,12 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.city}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.city}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({city: value})}
+              />
             </View>
           </View>
           <View
@@ -259,10 +286,12 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.address}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.address}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({address: value})}
+              />
             </View>
           </View>
           <View
@@ -290,14 +319,36 @@ class UpdateProfileModal extends Component {
                 paddingHorizontal: 10,
                 paddingVertical: 25,
               }}>
-              <Text
-                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.postalcode}
-              </Text>
+              <TextInput
+                style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
+                placeholder={profile.postal_code + ''}
+                placeholderTextColor={colorCSS.gray}
+                onChangeText={value => this.setState({postal_code: value})}
+              />
             </View>
           </View>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.updateProfile(
+                this.props.auth.myToken,
+                this.state.fullname,
+                this.state.phone_number,
+                this.state.dob,
+                this.state.country,
+                this.state.province,
+                this.state.city,
+                this.state.address,
+                this.state.postal_code,
+              )
+            }
+            style={[
+              design.profileButton,
+              {alignSelf: 'flex-end', marginBottom: 10, marginRight: 10},
+            ]}>
+            <Text style={design.profileButtonText}>UPDATE</Text>
+          </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -306,6 +357,6 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {closeUpdateProfile})(
+export default connect(mapStateToProps, {closeUpdateProfile, updateProfile})(
   UpdateProfileModal,
 );

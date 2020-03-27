@@ -9,10 +9,15 @@ import {
   Dimensions,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {setModalDetail, getLivestockId} from '../redux/action/LivestockAction';
+import {
+  setModalDetail,
+  setModalInvestment,
+} from '../redux/action/LivestockAction';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {design} from '../Auth/css/Styles';
 import colorCSS from '../Auth/css/Color';
+import InvestmentModal from './InvestmentModal';
+import Modal from 'react-native-modal';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -28,8 +33,16 @@ class ComDetailModal extends Component {
 
   render() {
     console.log('details', this.state.show);
-    const {dataLivestockID, isLoading} = this.props.livestock;
-    console.log('thisis', dataLivestockID);
+    const {
+      dataLivestockID,
+      isLoading,
+      modalInvestment,
+      modalDetail,
+    } = this.props.livestock;
+    const {myToken} = this.props.auth;
+    console.log('modal details', modalDetail);
+    console.log('modal investment', modalInvestment);
+
     return (
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <View style={{flex: 1}}>
@@ -199,24 +212,23 @@ class ComDetailModal extends Component {
             )}
           </View>
         </View>
-        <TouchableOpacity>
-          <Text
-            style={{
-              backgroundColor: colorCSS.greenlogo,
-              paddingHorizontal: 10,
-              paddingVertical: 10,
-              marginHorizontal: 50,
-              marginTop: 40,
-              borderColor: colorCSS.white,
-              borderWidth: 1,
-              borderRadius: 20,
-              fontSize: 20,
-              textAlign: 'center',
-              color: colorCSS.white,
+        {myToken !== 'guest' ? (
+          <TouchableOpacity
+            style={[design.profileButton, {alignSelf: 'center'}]}
+            onPress={() => this.props.setModalInvestment()}>
+            <Text style={design.profileButtonText}>INVEST</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[design.profileButton, {alignSelf: 'center'}]}
+            onPress={() => {
+              this.props.setModalDetail();
+              this.props.navigation.navigate('Login');
             }}>
-            INVEST
-          </Text>
-        </TouchableOpacity>
+            <Text style={design.profileButtonText}>INVEST</Text>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity
           onPress={() => this.props.setModalDetail()}
           style={{
@@ -227,6 +239,9 @@ class ComDetailModal extends Component {
           }}>
           <Icon name="arrowleft" size={30} color="white" />
         </TouchableOpacity>
+        <Modal isVisible={modalInvestment} style={{margin: 0}}>
+          <InvestmentModal />
+        </Modal>
       </ScrollView>
     );
   }
@@ -234,8 +249,9 @@ class ComDetailModal extends Component {
 
 const mapStateToProps = state => ({
   livestock: state.livestock,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, {setModalDetail, getLivestockId})(
+export default connect(mapStateToProps, {setModalDetail, setModalInvestment})(
   ComDetailModal,
 );

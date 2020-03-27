@@ -11,7 +11,7 @@ const height = Dimensions.get('window').height;
 
 class ProfileModal extends Component {
   render() {
-    const {user} = this.props.auth;
+    const {profile} = this.props.auth;
 
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -66,7 +66,7 @@ class ProfileModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.fullname}
+                {profile.fullname}
               </Text>
             </View>
           </View>
@@ -97,7 +97,7 @@ class ProfileModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.phone}
+                {profile.phone_number}
               </Text>
             </View>
           </View>
@@ -128,7 +128,7 @@ class ProfileModal extends Component {
               }}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
-                {user.dob}
+                {profile.dob}
               </Text>
             </View>
           </View>

@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  Image,
 } from 'react-native';
 import {design} from '../css/Styles';
 import {login} from '../../redux/action/AuthAction';
@@ -13,6 +14,8 @@ import {connect} from 'react-redux';
 import Loadingscreen from '../css/Loadingscreen';
 import Modal from 'react-native-modal';
 import Axios from 'axios';
+import colorCSS from '../css/Color';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -46,77 +49,150 @@ class Login extends Component {
   };
 
   render() {
-    console.log('email :', this.state.email);
-    console.log('password :', this.state.password);
-    console.log('token :', this.state.token);
-    console.log('login ', this.props.token !== '');
-
-    // console.log(this.props.auth);
     return (
       <View>
         <Loadingscreen visible={this.props.auth.isloading} />
+        <View
+          style={{
+            backgroundColor: colorCSS.greenlogo,
+            height: height / 2.2,
+            borderRadius: 30,
+            top: -width / 15,
+          }}>
+          <Image
+            source={require('../../../assets/img/AYOvest.png')}
+            style={{
+              top: width / 7,
+              width: width / 1.7,
+              height: width / 9,
+              alignSelf: 'center',
+            }}
+            tintColor="white"
+          />
+          <Image
+            source={require('../../../assets/img/Group95.png')}
+            style={{
+              top: width / 7,
+              width: width / 2.5,
+              height: width / 2.5,
+              alignSelf: 'center',
+              marginTop: width / 15,
+            }}
+          />
+        </View>
         <Text
           style={{
-            marginTop: 20,
-            marginBottom: 40,
-            marginLeft: 15,
-            fontSize: 40,
-            fontWeight: 'bold',
+            marginLeft: 20,
+            fontSize: 15,
+            fontFamily: 'poppins',
+            color: colorCSS.gray,
           }}>
-          Login
+          Email
         </Text>
-        <Text style={{marginLeft: 20, fontSize: 20}}>Email Adress</Text>
         <TextInput
           onChangeText={value => this.setState({email: value})}
           keyboardType="email-address"
           style={{
             borderBottomWidth: 1,
+            borderBottomColor: colorCSS.gray,
             marginLeft: 15,
             marginRight: 15,
-            fontSize: 20,
-          }}></TextInput>
-        <Text style={{marginLeft: 20, fontSize: 20}}>Password</Text>
+            fontSize: 15,
+            fontFamily: 'poppins',
+            color: colorCSS.gray,
+            maxHeight: 43,
+          }}
+        />
+        <Text
+          style={{
+            marginLeft: 20,
+            fontSize: 15,
+            fontFamily: 'poppins',
+            color: colorCSS.gray,
+          }}>
+          Password
+        </Text>
         <TextInput
           onChangeText={value => this.setState({password: value})}
           secureTextEntry
           style={{
             borderBottomWidth: 1,
+            borderBottomColor: colorCSS.gray,
             marginLeft: 15,
             marginRight: 15,
-            fontSize: 20,
-          }}></TextInput>
-        <TouchableOpacity onPress={this.toggleModal}>
+            fontSize: 15,
+            fontFamily: 'poppins',
+            color: colorCSS.gray,
+            maxHeight: 43,
+          }}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginVertical: width / 12,
+          }}>
           <Text
             style={{
-              color: 'blue',
-              fontWeight: 'bold',
-              textAlign: 'right',
-              marginRight: 15,
-              fontSize: 20,
-              marginBottom: 20,
+              fontFamily: 'poppins',
+              fontSize: width / 8,
+              color: colorCSS.gray,
             }}>
-            Forgot your password?
+            Sign In
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={design.button}
-          onPress={async () => {
-            await this.props.login(this.state.email, this.state.password);
-            if (this.props.auth.token !== 'guest') {
-              this.props.navigation.navigate('Home');
-            } else alert('Wrong Email/Password');
+          <TouchableOpacity
+            style={{
+              width: width / 5,
+              height: width / 5,
+              backgroundColor: colorCSS.greenlogo,
+              padding: 15,
+              borderRadius: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={async () => {
+              await this.props.login(this.state.email, this.state.password);
+              if (this.props.auth.token !== 'guest') {
+                this.props.navigation.navigate('Home');
+              } else alert('Wrong Email/Password');
+            }}>
+            <Icon name="arrow-right" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginTop: width / 25,
           }}>
-          <Text style={design.textButton}>Log In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={{textAlign: 'center', fontSize: 17}}>
-            Don't have an accout?{' '}
-            <Text style={{color: 'green', fontWeight: 'bold'}}>
-              Register Now
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Register')}>
+            <Text
+              style={{
+                color: colorCSS.gray,
+                fontFamily: 'poppins',
+                textAlign: 'left',
+                fontSize: 17,
+                borderBottomWidth: 1,
+                borderBottomColor: colorCSS.gray,
+              }}>
+              Sign Up
             </Text>
-          </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.toggleModal}>
+            <Text
+              style={{
+                color: colorCSS.gray,
+                fontFamily: 'poppins',
+                textAlign: 'right',
+                fontSize: 17,
+                borderBottomWidth: 1,
+                borderBottomColor: colorCSS.gray,
+              }}>
+              Forgot password
+            </Text>
+          </TouchableOpacity>
+        </View>
         <Modal isVisible={this.state.isModalVisible}>
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -128,35 +204,41 @@ class Login extends Component {
                 width: '90%',
                 height: '50%',
                 backgroundColor: 'white',
-                borderWidth: 5,
+                borderWidth: 2,
                 borderRadius: 20,
-                borderColor: 'green',
+                borderColor: colorCSS.greenlogo,
               }}>
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'poppins',
+                  color: colorCSS.gray,
+                }}>
                 Input your email :{' '}
               </Text>
               <TextInput
                 onChangeText={value => this.setState({email: value})}
                 style={{
                   borderWidth: 1,
+                  borderColor: colorCSS.gray,
                   borderRadius: 10,
                   margin: 5,
                   paddingHorizontal: 20,
                   fontWeight: '500',
                   width: width / 1.5,
                 }}
-                placeholderTextColor="black"
+                placeholderTextColor={colorCSS.gray}
               />
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
                   onPress={() => this.forgotPassword(this.state.email)}>
                   <Text
                     style={{
-                      backgroundColor: 'green',
+                      backgroundColor: colorCSS.greenlogo,
                       borderRadius: 10,
                       color: 'white',
                       fontSize: 15,
-                      fontWeight: 'bold',
+                      fontFamily: 'poppins',
                       padding: 5,
                       marginHorizontal: 5,
                     }}>
@@ -166,11 +248,11 @@ class Login extends Component {
                 <TouchableOpacity onPress={this.toggleModal}>
                   <Text
                     style={{
-                      backgroundColor: 'green',
+                      backgroundColor: colorCSS.greenlogo,
                       borderRadius: 10,
                       color: 'white',
                       fontSize: 15,
-                      fontWeight: 'bold',
+                      fontFamily: 'poppins',
                       padding: 5,
                       marginHorizontal: 5,
                     }}>

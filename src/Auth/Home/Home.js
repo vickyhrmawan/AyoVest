@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
-import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/Entypo';
 import Modal from 'react-native-modal';
 import ComDetailModal from '../../Modal/ComDetailModal';
@@ -23,8 +22,9 @@ import {
   getLivestock,
   getLivestockId,
   moreLivestock,
+  getInvestment,
 } from '../../redux/action/LivestockAction';
-import {getToken} from '../../redux/action/AuthAction';
+import {getToken, getProfile} from '../../redux/action/AuthAction';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -60,8 +60,11 @@ class Home extends Component {
   };
 
   async componentDidMount() {
-    this.props.getLivestock();
-    this.props.getToken();
+    await this.props.getToken();
+    console.log('dapat token.', this.props.auth.myToken);
+    await this.props.getLivestock();
+    await this.props.getProfile(this.props.auth.myToken);
+    await this.props.getInvestment(this.props.auth.myToken);
   }
   renderFooter() {
     return (
@@ -93,9 +96,11 @@ class Home extends Component {
       modalDetail,
       hasNextPage,
       nextPage,
+      dataInvestment,
     } = this.props.livestock;
     const {myToken, user} = this.props.auth;
-    console.log('profile', user);
+    console.log('token dari gettoken', myToken);
+    console.log('profile', dataInvestment);
     if (isLoading === true) {
       return <LoadingScreen />;
     }
@@ -151,16 +156,12 @@ class Home extends Component {
                 width: this.state.searchAnimated,
                 left: 10,
                 top: 10,
-                // marginHorizontal: 10,
               }}>
               <TextInput
                 placeholder="Search"
                 style={{
                   fontSize: 15,
                   paddingLeft: 15,
-                  // margin: 10,
-                  // height: 35,
-                  // marginTop: 20,
                 }}
                 onChangeText={text => this._searchingData(text)}
               />
@@ -174,13 +175,6 @@ class Home extends Component {
               </TouchableOpacity>
             </Animated.View>
           )}
-          {/* <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-            }}
-            onPress={() => this.ShowHideComponent()}>
-            <Icon name="magnifying-glass" size={30} color={colorCSS.white} />
-          </TouchableOpacity> */}
         </View>
         <View
           style={{
@@ -195,13 +189,6 @@ class Home extends Component {
             marginTop: height / 10,
             elevation: 10,
           }}>
-          {/* <View style={{flex: 1}}>
-            <TextInput
-              placeholder="Search"
-              style={{fontSize: 15, paddingLeft: 15}}
-              onChangeText={text => this._searchingData(text)}
-            />
-          </View> */}
           <View
             style={{
               justifyContent: 'space-between',
@@ -225,14 +212,14 @@ class Home extends Component {
                 style={{
                   lineHeight: height / 35,
                   letterSpacing: 0.5,
-                  fontSize: 20,
+                  fontSize: width / 20,
                   color: 'green',
                 }}>
                 1500{' '}
               </Text>
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: width / 22,
                   color: 'green',
                 }}>
                 investors{' '}
@@ -262,14 +249,14 @@ class Home extends Component {
                 style={{
                   lineHeight: height / 35,
                   letterSpacing: 0.5,
-                  fontSize: 20,
+                  fontSize: width / 20,
                   color: 'green',
                 }}>
                 285{' '}
               </Text>
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: width / 22,
                   color: 'green',
                 }}>
                 breeders{' '}
@@ -341,7 +328,6 @@ class Home extends Component {
                     <View
                       style={{
                         flexDirection: 'row',
-                        // alignContent: 'space-between',
                       }}>
                       <View style={{width: width / 4.25}}>
                         <Text style={design.flatlistText}>price/unit</Text>
@@ -381,7 +367,7 @@ class Home extends Component {
           />
         </View>
         <Modal isVisible={modalDetail} style={{margin: 0}}>
-          <ComDetailModal />
+          <ComDetailModal {...this.props} />
         </Modal>
       </View>
     );
@@ -398,4 +384,6 @@ export default connect(mapStateToProps, {
   getLivestockId,
   moreLivestock,
   getToken,
+  getProfile,
+  getInvestment,
 })(Home);

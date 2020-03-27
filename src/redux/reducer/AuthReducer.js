@@ -10,17 +10,17 @@ const initialState = {
   modalProfile: false,
   modalAdress: false,
   modalUpdate: false,
-  // profile: {},
+  profile: {},
 };
 
 export const AuthReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ISLOADING':
       return {...state, isloading: action.payload};
-    // case 'GETPROFILE':
-    //   return {...state, profile: action.payload};
+    case 'GETPROFILE':
+      return {...state, profile: action.payload};
     case 'LOGIN':
-      return {...state, user: action.payload};
+      return {...state, profile: action.payload};
     case 'TOKEN':
       return {...state, myToken: action.payload};
     case 'SHOW_PROFILE':

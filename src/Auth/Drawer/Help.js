@@ -1,25 +1,84 @@
 import React, {Component} from 'react';
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image, Dimensions} from 'react-native';
+import {design} from '../css/Styles';
+import colorCSS from '../css/Color';
+import Icon from 'react-native-vector-icons/AntDesign';
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export default class Help extends Component {
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center'}}>
-        <Image
-          source={require('../../../assets/img/ayovest-logo.png')}
-          style={{width: 320, height: 230, alignSelf: 'center'}}
-        />
-        <Text style={{fontSize: 25, margin: 10}}> AYOvest Pte. Ltd. </Text>
-        <Text style={{fontSize: 15, marginHorizontal: 10}}>
-          60, #01-01 Ubi Cres, Ubi Techpark, Singapura 408569
-        </Text>
-        <Text style={{fontSize: 15, marginHorizontal: 10}}>
-          Jl. Hang Lekiu No.KM 2, Sambau, Kecamatan Nongsa, Kota Batam,
-          Kepulauan Riau 29465{' '}
-        </Text>
-        <Text style={{fontSize: 15, marginHorizontal: 10}}>
-          (+65) 1234 5678, (0778) 1234567
-        </Text>
+      <View style={{flex: 1}}>
+        <Text style={design.textHeader}>Help</Text>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Image
+            source={require('../../../assets/img/Group91.png')}
+            style={{
+              width: width / 1.3,
+              height: width / 1.3,
+              alignSelf: 'center',
+              marginVertical: 20,
+            }}
+          />
+          <View style={{alignItems: 'center'}}>
+            <Text
+              style={{
+                fontSize: 20,
+                margin: 10,
+                fontFamily: 'poppins',
+                fontWeight: 'bold',
+              }}>
+              How can we help you?
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                marginHorizontal: 10,
+                marginVertical: width / 20,
+                textAlign: 'center',
+                fontFamily: 'poppins',
+              }}>
+              It looks like you are experiencing problems with our sign up
+              process. We are here to help so please get in touch with us
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <View>
+                <Icon
+                  name="mail"
+                  size={width / 15}
+                  color={colorCSS.greenlogo}
+                />
+                <Icon
+                  name="phone"
+                  size={width / 15}
+                  color={colorCSS.greenlogo}
+                />
+              </View>
+              <View>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginHorizontal: 10,
+                    fontFamily: 'poppins',
+                    fontWeight: 'bold',
+                  }}>
+                  help@ayovest.com
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginHorizontal: 10,
+                    fontFamily: 'poppins',
+                    fontWeight: 'bold',
+                  }}>
+                  0822 5678 4040
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     );
   }
