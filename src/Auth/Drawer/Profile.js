@@ -142,8 +142,14 @@ class Profile extends Component {
               flexDirection: 'row',
               marginHorizontal: 30,
               alignSelf: 'center',
+              marginTop: -width / 22,
             }}>
             <TouchableOpacity
+              style={design.profileButton}
+              onPress={() => this.props.setUpdateProfile()}>
+              <Text style={design.profileButtonText}>Profile</Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity
               style={design.profileButton}
               onPress={() => this.props.setProfileDetail(myToken)}>
               <Text style={design.profileButtonText}>Profile</Text>
@@ -151,8 +157,8 @@ class Profile extends Component {
             <TouchableOpacity
               style={design.profileButton}
               onPress={() => this.props.setAdressDetail()}>
-              <Text style={design.profileButtonText}>Adress</Text>
-            </TouchableOpacity>
+              <Text style={design.profileButtonText}>Address</Text>
+            </TouchableOpacity> */}
           </View>
           <View
             style={{
@@ -229,13 +235,16 @@ class Profile extends Component {
                   <View style={{flexDirection: 'row', marginVertical: 5}}>
                     <View
                       style={{
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        elevation: 10,
+                        elevation: 1,
                       }}>
                       <Image
                         source={{uri: item.livestockId.image}}
-                        style={{width: width / 7, height: width / 4.5}}
+                        style={{
+                          width: width / 7,
+                          height: width / 4.5,
+                          borderWidth: 1,
+                          borderRadius: 10,
+                        }}
                       />
                     </View>
                     <View style={{paddingHorizontal: 10}}>
@@ -317,13 +326,16 @@ class Profile extends Component {
                   <View style={{flexDirection: 'row', marginVertical: 5}}>
                     <View
                       style={{
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        elevation: 10,
+                        elevation: 1,
                       }}>
                       <Image
                         source={{uri: item.livestockId.image}}
-                        style={{width: width / 7, height: width / 4.5}}
+                        style={{
+                          width: width / 7,
+                          height: width / 4.5,
+                          borderWidth: 1,
+                          borderRadius: 10,
+                        }}
                       />
                     </View>
                     <View
@@ -396,13 +408,13 @@ class Profile extends Component {
           )}
           {/* </View> */}
         </View>
-        <View style={{alignSelf: 'center'}}>
+        {/* <View style={{alignSelf: 'center'}}>
           <TouchableOpacity
             style={design.profileButton}
             onPress={() => this.props.setUpdateProfile()}>
             <Text style={design.profileButtonText}>Edit Profile</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <Modal isVisible={modalProfile} style={{margin: 0}}>
           <ProfileModal />
         </Modal>

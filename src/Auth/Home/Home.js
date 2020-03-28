@@ -60,9 +60,6 @@ class Home extends Component {
   };
 
   async componentDidMount() {
-    await this.props.getToken();
-    console.log('dapat token.', this.props.auth.myToken);
-    await this.props.getLivestock();
     await this.props.getProfile(this.props.auth.myToken);
     await this.props.getInvestment(this.props.auth.myToken);
   }

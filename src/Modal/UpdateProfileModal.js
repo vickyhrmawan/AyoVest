@@ -10,6 +10,7 @@ import {
 import {design} from '../Auth/css/Styles';
 import colorCSS from '../Auth/css/Color';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icons from 'react-native-vector-icons/Entypo';
 import {connect} from 'react-redux';
 import {closeUpdateProfile, updateProfile} from '../redux/action/AuthAction';
 import {TextInput} from 'react-native-gesture-handler';
@@ -37,7 +38,9 @@ class UpdateProfileModal extends Component {
 
     return (
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
-        <Text style={design.textHeader}>AYOvest</Text>
+        <Text style={[design.textHeader, {marginBottom: 15}]}>
+          Update Profile
+        </Text>
         <TouchableOpacity
           onPress={() => this.props.closeUpdateProfile()}
           style={{
@@ -48,7 +51,7 @@ class UpdateProfileModal extends Component {
           }}>
           <Icon name="arrowleft" size={30} color="white" />
         </TouchableOpacity>
-        <View>
+        {/* <View>
           <Text
             style={{
               fontFamily: 'poppins',
@@ -59,33 +62,16 @@ class UpdateProfileModal extends Component {
             }}>
             Update Profile
           </Text>
-        </View>
+        </View> */}
         <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 Fullname
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.fullname}
@@ -93,32 +79,18 @@ class UpdateProfileModal extends Component {
                 onChangeText={value => this.setState({fullname: value})}
               />
             </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 Phone
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.phone_number}
@@ -126,32 +98,18 @@ class UpdateProfileModal extends Component {
                 onChangeText={value => this.setState({phone_number: value})}
               />
             </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 Date of Birth
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.dob}
@@ -159,34 +117,20 @@ class UpdateProfileModal extends Component {
                 onChangeText={value => this.setState({dob: value})}
               />
             </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
+            </View>
           </View>
         </View>
         <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 Country
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.country}
@@ -194,32 +138,18 @@ class UpdateProfileModal extends Component {
                 onChangeText={value => this.setState({country: value})}
               />
             </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 Province
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.province}
@@ -227,32 +157,18 @@ class UpdateProfileModal extends Component {
                 onChangeText={value => this.setState({province: value})}
               />
             </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 City
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.city}
@@ -260,32 +176,18 @@ class UpdateProfileModal extends Component {
                 onChangeText={value => this.setState({city: value})}
               />
             </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 Address
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.address}
@@ -293,38 +195,27 @@ class UpdateProfileModal extends Component {
                 onChangeText={value => this.setState({address: value})}
               />
             </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginHorizontal: 30,
-              marginVertical: 10,
-              backgroundColor: 'white',
-              elevation: 8,
-            }}>
-            <View
-              style={{
-                width: width / 3,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+          <View style={design.profileContainer}>
+            <View style={design.profileBox}>
               <Text
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}>
                 Postal Code
               </Text>
             </View>
-            <View
-              style={{
-                width: width / 1.97,
-                paddingHorizontal: 10,
-                paddingVertical: 25,
-              }}>
+            <View style={design.profileBoxTextinput}>
               <TextInput
                 style={{fontFamily: 'poppins', fontSize: 15, color: 'gray'}}
                 placeholder={profile.postal_code + ''}
                 placeholderTextColor={colorCSS.gray}
                 onChangeText={value => this.setState({postal_code: value})}
               />
+            </View>
+            <View style={{justifyContent: 'center', marginLeft: -width / 15}}>
+              <Icons name="dots-three-vertical" size={20} color="lightgray" />
             </View>
           </View>
           <TouchableOpacity
@@ -343,7 +234,12 @@ class UpdateProfileModal extends Component {
             }
             style={[
               design.profileButton,
-              {alignSelf: 'flex-end', marginBottom: 10, marginRight: 10},
+              {
+                alignSelf: 'center',
+                marginBottom: 10,
+                marginTop: 5,
+                // marginRight: width / 11,
+              },
             ]}>
             <Text style={design.profileButtonText}>UPDATE</Text>
           </TouchableOpacity>

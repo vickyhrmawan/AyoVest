@@ -53,6 +53,7 @@ class BillingModal extends Component {
                   textAlign: 'center',
                   fontFamily: 'poppins',
                   fontSize: 23,
+                  marginTop: -width / 15,
                 }}>
                 Thank you!
               </Text>
@@ -143,7 +144,7 @@ class BillingModal extends Component {
               borderWidth: 1,
               margin: 10,
               padding: 10,
-              marginVertical: width / 12,
+              marginVertical: width / 18,
             }}>
             <Text style={[design.billingText, {fontSize: 18}]}>
               Payment Details
@@ -193,7 +194,12 @@ class BillingModal extends Component {
           </View>
         </View>
         {dataInvestmentID.paidStatus === true ? (
-          <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginTop: -width / 30,
+            }}>
             <TouchableOpacity
               style={design.profileButton}
               onPress={() => this.props.closeModalBilling()}>

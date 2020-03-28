@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -29,6 +29,24 @@ import HowItWorks from './Auth/Drawer/HowItWorks';
 import Profile from './Auth/Drawer/Profile';
 import DrawerScreen from './Auth/Drawer/DrawerScreen';
 import Splashscreen from './Auth/Home/Splashscreen';
+//redux
+import IconTab from '../src/Auth/css/IconTab';
+
+// class IconTab extends Component {
+//   render() {
+//     console.log('TOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL', this.props.auth);
+//     return (
+//       <View>
+//         <Icon name="user" size={20} color={this.props.tintColor} />
+//       </View>
+//     );
+//   }
+// }
+
+// const mapStateToProps = state => ({
+//   auth: state.auth,
+// });
+// connect(mapStateToProps)(IconTab);
 
 const AuthNavigator = createStackNavigator({
   LandingPage: {
@@ -76,9 +94,11 @@ const Tabs = createBottomTabNavigator(
       screen: Profile,
       navigationOptions: {
         tabBarLabel: 'Profile',
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="user" size={20} color={tintColor} />
+        tabBarIcon: props => (
+          // <Icon name="user" size={20} color={tintColor} />
+          <IconTab {...props} />
         ),
+        // <IconTab />
       },
     },
   },

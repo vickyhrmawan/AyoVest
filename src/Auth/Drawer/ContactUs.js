@@ -13,10 +13,10 @@ export default class ContactUs extends Component {
         <Text style={design.textHeader}>Contact Us</Text>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Image
-            source={require('../../../assets/img/Group91.png')}
+            source={require('../../../assets/img/AYOvest.png')}
             style={{
               width: width / 1.3,
-              height: width / 1.3,
+              height: width / 7,
               alignSelf: 'center',
               marginVertical: 20,
             }}
@@ -28,7 +28,7 @@ export default class ContactUs extends Component {
           </Text>
           <Text
             style={{fontSize: 15, marginHorizontal: 10, fontFamily: 'poppins'}}>
-            60, #01-01 Ubi Cres, Ubi Techpark, Singapura 408569
+            60, #01-01 Ubi Cres, Ubi Techpark, Singapore 408569
           </Text>
           <Text
             style={{fontSize: 15, marginHorizontal: 10, fontFamily: 'poppins'}}>

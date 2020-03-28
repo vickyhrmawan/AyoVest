@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {design} from '../css/Styles';
 import {login} from '../../redux/action/AuthAction';
@@ -19,6 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+const keyboardVerticalOffset = Platform.OS === 'android' ? 40 : 0;
 
 class Login extends Component {
   constructor(props) {
@@ -50,7 +52,9 @@ class Login extends Component {
 
   render() {
     return (
-      <View>
+      <KeyboardAvoidingView
+        behavior="position"
+        keyboardVerticalOffset={keyboardVerticalOffset}>
         <Loadingscreen visible={this.props.auth.isloading} />
         <View
           style={{
@@ -263,7 +267,7 @@ class Login extends Component {
             </View>
           </View>
         </Modal>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

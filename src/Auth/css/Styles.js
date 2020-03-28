@@ -164,6 +164,24 @@ const design = StyleSheet.create({
     color: colorCSS.white,
     textAlign: 'center',
   },
+  profileContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 30,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    elevation: 8,
+  },
+  profileBox: {
+    width: width / 3,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    paddingVertical: 25,
+  },
+  profileBoxTextinput: {
+    width: width / 1.97,
+    paddingHorizontal: 10,
+    paddingVertical: 25,
+  },
   //Billing Modal
   billingText: {fontFamily: 'poppins', fontSize: 15},
 

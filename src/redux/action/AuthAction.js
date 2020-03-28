@@ -146,6 +146,7 @@ export const updateProfile = (
 };
 
 export const getToken = () => {
+  console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
   return async dispatch => {
     try {
       const findToken = await AsyncStorage.getItem('token');

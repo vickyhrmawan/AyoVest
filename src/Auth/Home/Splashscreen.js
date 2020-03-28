@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 import {Text, View, Image, Dimensions} from 'react-native';
 import colorCSS from '../css/Color';
+import {connect} from 'react-redux';
+import {
+  getLivestock,
+  getLivestockId,
+  moreLivestock,
+  getInvestment,
+} from '../../redux/action/LivestockAction';
+import {getToken, getProfile} from '../../redux/action/AuthAction';
 
 class Splashscreen extends Component {
   performTimeConsumingTask = async () => {
@@ -14,12 +22,23 @@ class Splashscreen extends Component {
   async componentDidMount() {
     // Preload data from an external API
     // Preload data using AsyncStorage
+    await this.props.getToken();
+    console.log('dapat token.', this.props.auth.myToken);
+    await this.props.getLivestock();
     const data = await this.performTimeConsumingTask();
 
     if (data !== null) {
       this.props.navigation.navigate('Home');
     }
   }
+
+  // async componentDidMount() {
+  //   await this.props.getToken();
+  //   console.log('dapat token.', this.props.auth.myToken);
+  //   await this.props.getLivestock();
+  //   await this.props.getProfile(this.props.auth.myToken);
+  //   await this.props.getInvestment(this.props.auth.myToken);
+  // }
 
   render() {
     const width = Dimensions.get('window').width;
@@ -48,4 +67,12 @@ const styles = {
   },
 };
 
-export default Splashscreen;
+const mapStateToProps = state => ({
+  livestock: state.livestock,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {
+  getLivestock,
+  getToken,
+})(Splashscreen);

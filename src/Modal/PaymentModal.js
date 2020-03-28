@@ -72,7 +72,7 @@ class PaymentModal extends Component {
           style={{
             flexDirection: 'row',
             marginHorizontal: 10,
-            marginTop: width / 15,
+            marginTop: width / 20,
             borderTopWidth: 1,
             paddingTop: 10,
             borderColor: colorCSS.gray,
@@ -123,7 +123,7 @@ class PaymentModal extends Component {
             borderWidth: 1,
             margin: 10,
             padding: 10,
-            marginVertical: width / 20,
+            marginVertical: width / 50,
           }}>
           <Text style={[design.billingText, {fontSize: 18}]}>
             Payment Details
@@ -141,7 +141,7 @@ class PaymentModal extends Component {
               <Text
                 style={[
                   design.billingText,
-                  {fontSize: 20, marginVertical: 10},
+                  {fontSize: 20, marginVertical: width / 50},
                 ]}>
                 Amount
               </Text>
@@ -163,31 +163,34 @@ class PaymentModal extends Component {
               <Text
                 style={[
                   design.billingText,
-                  {fontSize: 20, marginVertical: 10},
+                  {fontSize: 20, marginVertical: width / 50},
                 ]}>
                 S${'  '}
                 {dataInvestmentID.totalPriceUnit}
               </Text>
             </View>
           </View>
-          <Text style={design.billingText}>
+          <Text style={[design.billingText, {fontSize: width / 30}]}>
             Make your Singapore Dollar Payment to:
           </Text>
-          <Text style={design.billingText}>
+          <Text style={[design.billingText, {fontSize: width / 30}]}>
             Bank Details : OCBC Bank, 65 Chulia St, #01-00, Singapore 049513
           </Text>
-          <Text style={design.billingText}>
+          <Text style={[design.billingText, {fontSize: width / 30}]}>
             Account Name : AYOvest Pte. Ltd.
           </Text>
-          <Text style={design.billingText}>Account Number : 1680 1688 88</Text>
+          <Text style={[design.billingText, {fontSize: width / 30}]}>
+            Account Number : 1680 1688 88
+          </Text>
         </View>
         <TouchableOpacity
           onPress={() => this._paymentUploader()}
           style={{
-            backgroundColor: 'green',
+            backgroundColor: colorCSS.greenlogo,
             borderRadius: 150,
             padding: 10,
-            alignSelf: 'center',
+            marginHorizontal: 10,
+            alignSelf: 'flex-start',
             // top: -width / 7,
             // left: width / 7,
           }}>
@@ -195,14 +198,32 @@ class PaymentModal extends Component {
             <Text style={design.billingText}> upload your payment</Text>
           </Icon>
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            // alignSelf: 'center',
+            marginTop: width / 50,
+            justifyContent: 'space-around',
+          }}>
           <TouchableOpacity
-            style={design.profileButton}
+            style={{
+              backgroundColor: colorCSS.greenlogo,
+              borderRadius: 10,
+              padding: 10,
+              alignSelf: 'center',
+              width: width / 3,
+            }}
             onPress={() => this.props.closeModalPayment()}>
             <Text style={design.profileButtonText}>Back</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={design.profileButton}
+            style={{
+              backgroundColor: colorCSS.greenlogo,
+              borderRadius: 10,
+              padding: 10,
+              alignSelf: 'center',
+              width: width / 3,
+            }}
             onPress={() =>
               this.props.createPayment(
                 myToken,

@@ -141,7 +141,7 @@ export const getInvestment = myToken => {
       });
       dispatch({type: 'ISLOADING', payload: false});
       dispatch({type: 'SAVE_DATA_INVESTMENT', payload: res.data.data});
-      dispatch({type: 'SHOW_INVESTMENT', payload: true});
+      // dispatch({type: 'SHOW_INVESTMENT', payload: true});
       console.log('getInvestment', res.data.data);
     } catch (error) {
       console.log('error persons ', error);
@@ -201,7 +201,7 @@ export const createInvestment = (myToken, livestockID, unit) => {
         },
       );
       dispatch({type: 'ISLOADING', payload: false});
-      dispatch({type: 'SAVE_DATA_INVESTMENTID', payload: res.data.data.data});
+      dispatch({type: 'SAVE_DATA_INVESTMENTID', payload: response.data.data});
       dispatch({type: 'SHOW_BILLING', payload: true});
     } catch (error) {
       console.log('error persons ', error);

@@ -50,7 +50,7 @@ class InvestmentModal extends Component {
         style={{
           backgroundColor: 'white',
           width: height / 2,
-          height: height / 1.4,
+          height: height / 1.3,
           alignSelf: 'center',
           borderRadius: 20,
         }}>
@@ -143,13 +143,14 @@ class InvestmentModal extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={design.profileButton}
-            onPress={() =>
+            onPress={() => {
               this.props.createInvestment(
                 myToken,
                 dataLivestockID._id,
                 this.state.unit,
-              )
-            }>
+              );
+              this.props.closeModalInvestment();
+            }}>
             <Text style={design.profileButtonText}>Submit</Text>
           </TouchableOpacity>
         </View>
