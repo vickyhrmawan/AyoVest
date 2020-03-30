@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import {getInvestment} from './LivestockAction';
 
 const baseUrl = 'https://ayo-vest.herokuapp.com/api/v1';
 // const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -54,10 +55,13 @@ export const login = (email, password) => {
       );
 
       AsyncStorage.setItem('token', res.data.data.jwt_token);
+
+      await dispatch(getProfile(res.data.data.jwt_token));
       dispatch(getToken());
-      console.log('response login', res.data);
-      dispatch({type: 'LOGIN', payload: res.data.data});
-      dispatch({type: 'ISLOADING', payload: false});
+      dispatch(getInvestment(res.data.data.jwt_token));
+      // console.log('response login', res.data);
+      // await dispatch({type: 'LOGIN', payload: res.data.data});
+      await dispatch({type: 'ISLOADING', payload: false});
     } catch (e) {
       console.log('error register', e);
       dispatch({type: 'ISLOADING', payload: false});

@@ -8,10 +8,12 @@ const height = Dimensions.get('window').height;
 
 class IconTab extends Component {
   render() {
+    console.log('authnya icon tab', this.props.auth.profile);
     return (
       <View>
         {this.props.auth.myToken === 'guest' ||
-        this.props.auth.myToken === undefined ? (
+        this.props.auth.myToken === undefined ||
+        this.props.auth.profile.profile_picture === undefined ? (
           <Icon name="user" size={20} color={this.props.tintColor} />
         ) : (
           <Image
