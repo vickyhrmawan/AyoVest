@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Text, View, Image, Dimensions} from 'react-native';
+import {Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -39,6 +40,16 @@ export default class AboutUs extends Component {
             around to be participated and making the world greener.{' '}
           </Text>
         </View>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.goBack()}
+          style={{
+            position: 'absolute',
+            alignSelf: 'flex-start',
+            top: 5,
+            padding: 5,
+          }}>
+          <Icon name="arrowleft" size={30} color="white" />
+        </TouchableOpacity>
       </View>
     );
   }

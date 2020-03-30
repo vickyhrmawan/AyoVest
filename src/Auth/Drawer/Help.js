@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, Image, Dimensions} from 'react-native';
+import {Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
 import {design} from '../css/Styles';
 import colorCSS from '../css/Color';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -79,6 +79,16 @@ export default class Help extends Component {
             </View>
           </View>
         </View>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.goBack()}
+          style={{
+            position: 'absolute',
+            alignSelf: 'flex-start',
+            top: 5,
+            padding: 5,
+          }}>
+          <Icon name="arrowleft" size={30} color="white" />
+        </TouchableOpacity>
       </View>
     );
   }

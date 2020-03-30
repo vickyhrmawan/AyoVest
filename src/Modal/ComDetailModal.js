@@ -201,14 +201,119 @@ class ComDetailModal extends Component {
                 {dataLivestockID.description}
               </Text>
             ) : (
-              <Text
-                style={{
-                  fontSize: 16,
-                  marginVertical: 3,
-                  fontFamily: 'poppins',
-                }}>
-                {dataLivestockID.priceUnit}
-              </Text>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    Expected Return
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    {dataLivestockID.expectedReturn}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    Contract Period
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    {dataLivestockID.contractPeriod} Years
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    Sharing Period
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    per {dataLivestockID.sharingPeriod} year
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    Expected Profit
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    S$ {dataLivestockID.profitSharingPeriod} / year
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    Total Expected Profit
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 3,
+                      fontFamily: 'poppins',
+                    }}>
+                    {dataLivestockID.profitContractPeriod -
+                      dataLivestockID.priceUnit}
+                  </Text>
+                </View>
+              </View>
             )}
           </View>
         </View>

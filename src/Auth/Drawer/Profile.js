@@ -455,29 +455,12 @@ class Profile extends Component {
             textAlign: 'center',
             marginVertical: width / 10,
           }}>
-          Please login to proceed
+          Please sign in to proceed
         </Text>
         <TouchableOpacity
-          style={{
-            width: width / 2.75,
-            borderRadius: 7,
-            marginHorizontal: 5,
-            marginTop: 20,
-            paddingVertical: 13,
-            marginBottom: 35,
-            backgroundColor: colorCSS.greenlogo,
-            alignSelf: 'center',
-          }}
+          style={[design.profileButton, {alignSelf: 'center'}]}
           onPress={() => this.props.navigation.navigate('Login')}>
-          <Text
-            style={{
-              fontFamily: 'poppins',
-              fontSize: 18,
-              textAlign: 'center',
-              color: colorCSS.white,
-            }}>
-            Login
-          </Text>
+          <Text style={design.profileButtonText}>Sign In</Text>
         </TouchableOpacity>
       </View>
     );

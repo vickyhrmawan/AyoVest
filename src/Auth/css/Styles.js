@@ -68,16 +68,19 @@ const design = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 5,
     fontWeight: 'bold',
+    color: colorCSS.gray,
   },
   flatlistText: {
     fontSize: width / 30,
     marginLeft: 10,
+    fontFamily: 'poppins',
   },
   flatlistNumber: {
     color: colorCSS.greenlogo,
     fontSize: 15,
     fontWeight: 'bold',
     marginLeft: 10,
+    fontFamily: 'poppins',
   },
   //drawerscreen
   menuList: {
@@ -150,11 +153,11 @@ const design = StyleSheet.create({
   },
   //profile
   profileButton: {
-    width: width / 2.75,
-    borderRadius: 7,
+    width: width / 3,
+    borderRadius: 40,
     marginHorizontal: 5,
     marginTop: width / 20,
-    paddingVertical: 13,
+    paddingVertical: width / 50,
     backgroundColor: colorCSS.greenlogo,
     marginBottom: 5,
   },

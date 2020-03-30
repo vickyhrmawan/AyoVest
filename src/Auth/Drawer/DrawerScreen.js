@@ -62,7 +62,7 @@ class DrawerScreen extends Component {
                 style={design.menuList}>
                 <Icon name="sign-in" size={20} color={colorCSS.greenlogo} />
                 {'    '}
-                Login
+                Sign In
               </Text>
             ) : null}
           </View>
@@ -114,7 +114,7 @@ class DrawerScreen extends Component {
                 }
                 style={design.menuList}>
                 <Icon name="power-off" size={20} color={colorCSS.greenlogo} />
-                {'    '} Logout
+                {'    '} Sign Out
               </Text>
             ) : null}
           </View>

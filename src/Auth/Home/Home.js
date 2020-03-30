@@ -207,17 +207,19 @@ class Home extends Component {
               }}>
               <Text
                 style={{
-                  lineHeight: height / 35,
+                  lineHeight: height / 33,
                   letterSpacing: 0.5,
                   fontSize: width / 20,
-                  color: 'green',
+                  color: colorCSS.greenlogo,
+                  fontFamily: 'poppins',
                 }}>
                 1500{' '}
               </Text>
               <Text
                 style={{
                   fontSize: width / 22,
-                  color: 'green',
+                  color: colorCSS.greenlogo,
+                  fontFamily: 'poppins',
                 }}>
                 investors{' '}
               </Text>
@@ -244,17 +246,19 @@ class Home extends Component {
               }}>
               <Text
                 style={{
-                  lineHeight: height / 35,
+                  lineHeight: height / 33,
                   letterSpacing: 0.5,
                   fontSize: width / 20,
-                  color: 'green',
+                  color: colorCSS.greenlogo,
+                  fontFamily: 'poppins',
                 }}>
                 285{' '}
               </Text>
               <Text
                 style={{
                   fontSize: width / 22,
-                  color: 'green',
+                  color: colorCSS.greenlogo,
+                  fontFamily: 'poppins',
                 }}>
                 breeders{' '}
               </Text>
@@ -262,7 +266,14 @@ class Home extends Component {
           </View>
         </View>
         <View style={{flex: 1, marginHorizontal: 10}}>
-          <Text style={{fontSize: 20, textAlign: 'center', marginVertical: 15}}>
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: 'center',
+              marginTop: width / 30,
+              color: colorCSS.gray,
+              fontFamily: 'poppins',
+            }}>
             Popular Livestock
           </Text>
 

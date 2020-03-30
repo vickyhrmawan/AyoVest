@@ -105,7 +105,7 @@ const Tabs = createBottomTabNavigator(
   {
     tabBarOptions: {
       activeTintColor: colorCSS.greenlogo,
-      inactiveTintColor: colorCSS.black,
+      inactiveTintColor: colorCSS.gray,
       style: {
         backgroundColor: colorCSS.white,
       },
@@ -128,7 +128,8 @@ const DrawerNavigator = createDrawerNavigator(
   {
     initialRouteName: 'Home',
     contentComponent: DrawerScreen,
-    drawerWidth: 300,
+    drawerWidth: 200,
+    drawerType: 'front',
   },
 );
 
