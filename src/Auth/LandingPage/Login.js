@@ -156,7 +156,7 @@ class Login extends Component {
             }}
             onPress={async () => {
               await this.props.login(this.state.email, this.state.password);
-              if (this.props.auth.myToken !== 'guest') {
+              if (this.props.auth.profile !== undefined) {
                 this.props.navigation.navigate('Home');
               } else alert('Wrong Email/Password');
             }}>
