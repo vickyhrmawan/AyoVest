@@ -189,7 +189,7 @@ export const createInvestment = (myToken, livestockID, unit) => {
           },
         },
       );
-      dispatch({type: 'ISLOADING', payload: false});
+      // dispatch({type: 'ISLOADING', payload: false});
       console.log('create Investment', res.data.data);
       let response = await axios.get(
         `${baseUrl}/investments/getone?id=${res.data.data.data._id}`,
@@ -200,8 +200,9 @@ export const createInvestment = (myToken, livestockID, unit) => {
           },
         },
       );
-      dispatch({type: 'ISLOADING', payload: false});
       dispatch({type: 'SAVE_DATA_INVESTMENTID', payload: response.data.data});
+      dispatch(getInvestment(myToken));
+      dispatch({type: 'ISLOADING', payload: false});
       dispatch({type: 'SHOW_BILLING', payload: true});
     } catch (error) {
       console.log('error persons ', error);
@@ -240,7 +241,11 @@ export const createPayment = (token, id, response) => {
         },
       );
       console.log('proses upload payment', uploadPayment.data);
+      dispatch(getInvestment(token));
+      dispatch({type: 'SHOW_BILLING', payload: false});
+      dispatch({type: 'SHOW_PAYMENT', payload: false});
       dispatch({type: 'ISLOADING', payload: false});
+      alert('Thank you for your payment!');
     } catch (e) {
       dispatch({type: 'ISLOADING', payload: false});
       console.log('error upload image', e);
