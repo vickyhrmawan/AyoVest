@@ -248,7 +248,9 @@ export const createPayment = (token, id, response) => {
       alert('Thank you for your payment!');
     } catch (e) {
       dispatch({type: 'ISLOADING', payload: false});
+      dispatch({type: 'SHOW_PAYMENT', payload: false});
       console.log('error upload image', e);
+      alert('Please input the correct image!');
     }
   };
 };

@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 import {getInvestment} from './LivestockAction';
 
 const baseUrl = 'https://ayo-vest.herokuapp.com/api/v1';
@@ -54,7 +54,7 @@ export const login = (email, password) => {
         },
       );
 
-      AsyncStorage.setItem('token', res.data.data.jwt_token);
+      // AsyncStorage.setItem('token', res.data.data.jwt_token);
 
       await dispatch(getProfile(res.data.data.jwt_token));
       dispatch(getToken());
@@ -153,15 +153,15 @@ export const getToken = () => {
   console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
   return async dispatch => {
     try {
-      const findToken = await AsyncStorage.getItem('token');
+      // const findToken = await AsyncStorage.getItem('token');
       if (findToken) {
         if (findToken !== 'guest') {
           dispatch({type: 'TOKEN', payload: findToken});
         } else {
-          AsyncStorage.setItem('token', 'guest');
+          // AsyncStorage.setItem('token', 'guest');
         }
       } else {
-        AsyncStorage.setItem('token', 'guest');
+        // AsyncStorage.setItem('token', 'guest');
       }
     } catch (error) {
       console.log('error register', error);

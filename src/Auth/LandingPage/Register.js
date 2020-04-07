@@ -17,6 +17,11 @@ import {design} from '../css/Styles';
 import Loadingscreen from '../css/Loadingscreen';
 import colorCSS from '../css/Color';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -30,14 +35,52 @@ class Register extends Component {
       phone_number: '',
       password: '',
       password_confirmation: '',
+      userInfo: null,
+      gettingLoginStatus: true,
     };
   }
+
+  componentDidMount() {
+    //initial configuration
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId:
+        '546283393382-dke3agph4ulunsavffhvv6f5mjtoltbr.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+      hostedDomain: '', // specifies a hosted domain restriction
+      loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
+      forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+      accountName: '', // [Android] specifies an account name on the device that should be used
+      // iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+    });
+  }
+
+  _signIn = async () => {
+    //Prompts a modal to let the user sign in into your application.
+    try {
+      await GoogleSignin.hasPlayServices({
+        //Check if device has Google Play Services installed.
+        //Always resolves to true on iOS.
+        showPlayServicesUpdateDialog: true,
+      });
+      const userInfo = await GoogleSignin.signIn();
+      console.log('User Info --> ', userInfo);
+      this.setState({userInfo: userInfo});
+    } catch (error) {
+      console.log('Message', error.message);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('User Cancelled the Login Flow');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('Signing In');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('Play Services Not Available or Outdated');
+      } else {
+        console.log('Some Other Error Happened');
+      }
+    }
+  };
+
   render() {
-    console.log('fullname', this.state.fullname);
-    console.log('email', this.state.email);
-    console.log('phone_number', this.state.phone_number);
-    console.log('password', this.state.password);
-    console.log('password_confirmation', this.state.password_confirmation);
     return (
       <KeyboardAvoidingView
         style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}
@@ -144,7 +187,7 @@ class Register extends Component {
                 Sign In
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Text
                 style={{
                   color: colorCSS.white,
@@ -156,7 +199,14 @@ class Register extends Component {
                 }}>
                 Forgot password
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <GoogleSigninButton
+              style={{width: width / 2, height: width / 10}}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Light}
+              onPress={this._signIn}
+              // disabled={this.state.isSigninInProgress}
+            />
           </View>
         </ImageBackground>
       </KeyboardAvoidingView>

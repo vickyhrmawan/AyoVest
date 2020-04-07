@@ -1,5 +1,5 @@
 import {bindActionCreators} from 'redux';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
   isloading: false,
@@ -30,7 +30,7 @@ export const AuthReducer = (state = initialState, action) => {
     case 'SHOW_UPDATE':
       return {...state, modalUpdate: action.payload};
     case 'LOGOUT':
-      AsyncStorage.clear();
+      // AsyncStorage.clear();
       alert('You are successfully Logout');
       return false;
     default:
