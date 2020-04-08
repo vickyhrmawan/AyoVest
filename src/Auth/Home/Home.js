@@ -55,7 +55,8 @@ class Home extends Component {
       this.setState({show: false});
       this.showSearchBar();
     } else {
-      this.setState({show: true, searchAnimated: new Animated.Value(0)});
+      // this.setState({show: true, searchAnimated: new Animated.Value(0)});
+      this.closeSearchBar();
     }
   };
 
@@ -84,6 +85,13 @@ class Home extends Component {
       toValue: width - 20,
       duration: 300,
     }).start();
+  };
+
+  closeSearchBar = () => {
+    Animated.timing(this.state.searchAnimated, {
+      toValue: 0,
+      duration: 100,
+    }).start(({finished}) => this.setState({show: true}));
   };
 
   render() {
@@ -209,11 +217,11 @@ class Home extends Component {
                 style={{
                   lineHeight: height / 33,
                   letterSpacing: 0.5,
-                  fontSize: width / 20,
+                  fontSize: width / 21,
                   color: colorCSS.greenlogo,
                   fontFamily: 'poppins',
                 }}>
-                1500{' '}
+                1500
               </Text>
               <Text
                 style={{
@@ -248,7 +256,7 @@ class Home extends Component {
                 style={{
                   lineHeight: height / 33,
                   letterSpacing: 0.5,
-                  fontSize: width / 20,
+                  fontSize: width / 21,
                   color: colorCSS.greenlogo,
                   fontFamily: 'poppins',
                 }}>

@@ -1,5 +1,5 @@
 import Axios from 'axios';
-// import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import {getInvestment} from './LivestockAction';
 
 const baseUrl = 'https://ayo-vest.herokuapp.com/api/v1';
@@ -32,7 +32,7 @@ export const register = (
       dispatch({type: 'ISLOADING', payload: false});
     } catch (e) {
       console.log('error register', e);
-      // alert(res.data.message);
+      alert(res.data.message);
       dispatch({type: 'ISLOADING', payload: false});
     }
   };
@@ -54,13 +54,13 @@ export const login = (email, password) => {
         },
       );
 
-      // AsyncStorage.setItem('token', res.data.data.jwt_token);
+      AsyncStorage.setItem('token', res.data.data.jwt_token);
 
       await dispatch(getProfile(res.data.data.jwt_token));
       dispatch(getToken());
       dispatch(getInvestment(res.data.data.jwt_token));
       // console.log('response login', res.data);
-      // await dispatch({type: 'LOGIN', payload: res.data.data});
+      await dispatch({type: 'LOGIN', payload: res.data.data});
       await dispatch({type: 'ISLOADING', payload: false});
     } catch (e) {
       console.log('error register', e);
@@ -153,15 +153,15 @@ export const getToken = () => {
   console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
   return async dispatch => {
     try {
-      // const findToken = await AsyncStorage.getItem('token');
+      const findToken = await AsyncStorage.getItem('token');
       if (findToken) {
         if (findToken !== 'guest') {
           dispatch({type: 'TOKEN', payload: findToken});
         } else {
-          // AsyncStorage.setItem('token', 'guest');
+          AsyncStorage.setItem('token', 'guest');
         }
       } else {
-        // AsyncStorage.setItem('token', 'guest');
+        AsyncStorage.setItem('token', 'guest');
       }
     } catch (error) {
       console.log('error register', error);

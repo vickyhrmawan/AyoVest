@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
 import PropTypes from 'prop-types';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View, ToastAndroid} from 'react-native';
 import {DrawerActions} from 'react-navigation-drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,6 +17,9 @@ class DrawerScreen extends Component {
     });
     this.props.navigation.dispatch(navigateAction);
     this.props.navigation.dispatch(DrawerActions.closeDrawer());
+  };
+  showToast = () => {
+    ToastAndroid.show("Logout Successful!", ToastAndroid.SHORT);
   };
 
   render() {
@@ -41,20 +44,8 @@ class DrawerScreen extends Component {
             marginHorizontal: 15,
             justifyContent: 'flex-end',
           }}>
-          {/* <Text style={design.profileName}>Agus Mulyono</Text> */}
         </View>
         <View style={{flex: 3}}>
-          {/* <View>
-            <Text
-              onPress={
-                myToken !== 'guest'
-                  ? this.navigateToScreen('Profile')
-                  : this.navigateToScreen('Login')
-              }
-              style={design.menuList}>
-              <Icon name="user" size={20} /> My Profile
-            </Text>
-          </View> */}
           <View>
             {myToken === 'guest' ? (
               <Text
@@ -109,6 +100,7 @@ class DrawerScreen extends Component {
                   this.props.logout().then(() => {
                     if (this.props.auth.myToken === 'guest') {
                       this.props.navigation.navigate('Home');
+                      this.showToast();
                     }
                   })
                 }

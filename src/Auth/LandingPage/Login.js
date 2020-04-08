@@ -8,6 +8,7 @@ import {
   Dimensions,
   Image,
   KeyboardAvoidingView,
+  ToastAndroid
 } from 'react-native';
 import {design} from '../css/Styles';
 import {login} from '../../redux/action/AuthAction';
@@ -21,6 +22,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const keyboardVerticalOffset = Platform.OS === 'android' ? 40 : 0;
+
 
 class Login extends Component {
   constructor(props) {
@@ -50,7 +52,13 @@ class Login extends Component {
     }
   };
 
-  render() {
+ showToast = () => {
+    ToastAndroid.show("Login Successful!", ToastAndroid.SHORT);
+  };
+
+  render(
+    
+  ) {
     return (
       <KeyboardAvoidingView
         behavior="position"
@@ -158,6 +166,7 @@ class Login extends Component {
               await this.props.login(this.state.email, this.state.password);
               if (this.props.auth.profile !== undefined) {
                 this.props.navigation.navigate('Home');
+                this.showToast();
               } else alert('Wrong Email/Password');
             }}>
             <Icon name="arrow-right" size={30} color="white" />
@@ -170,7 +179,8 @@ class Login extends Component {
             marginTop: width / 25,
           }}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Register')}>
+            onPress={() => this.props.navigation.navigate('Register')}
+            >
             <Text
               style={{
                 color: colorCSS.gray,
