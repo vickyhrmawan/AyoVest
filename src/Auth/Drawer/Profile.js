@@ -133,7 +133,8 @@ class Profile extends Component {
                   fontSize: 15,
                   textAlign: 'center',
                 }}>
-                2 {profile.length} Investments{' '}
+                {dataInvestment.filter(item => item.paidStatus === true).length}{' '}
+                Investments
               </Text>
             </View>
           </View>
@@ -231,14 +232,14 @@ class Profile extends Component {
                       />
                     </View>
                     <View style={{paddingHorizontal: 10}}>
-                      <View style={{flexDirection:'row'}}>
+                      <View style={{flexDirection: 'row'}}>
                         <View>
                           <Text
                             style={{
-                            fontFamily: 'poppins',
-                            fontSize: 17,
-                            height: 25,
-                          }}>
+                              fontFamily: 'poppins',
+                              fontSize: 17,
+                              height: 25,
+                            }}>
                             {item.livestockName}
                           </Text>
                           <Text
@@ -251,7 +252,7 @@ class Profile extends Component {
                           </Text>
                         </View>
                         <View>
-                        {/* <Text
+                          {/* <Text
                             style={{
                               fontFamily: 'poppins',
                               fontSize: 13,
@@ -260,7 +261,7 @@ class Profile extends Component {
                             {item.updatedAt}
                           </Text> */}
                         </View>
-                      </View>                    
+                      </View>
                       <View
                         style={{
                           flexDirection: 'row',
