@@ -29,10 +29,6 @@ export const AuthReducer = (state = initialState, action) => {
       return {...state, modalAdress: action.payload};
     case 'SHOW_UPDATE':
       return {...state, modalUpdate: action.payload};
-    case 'LOGOUT':
-      // AsyncStorage.clear();
-      alert('You are successfully Logout');
-      return false;
     default:
       return state;
   }

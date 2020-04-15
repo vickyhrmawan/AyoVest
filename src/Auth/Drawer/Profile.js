@@ -133,7 +133,8 @@ class Profile extends Component {
                   fontSize: 15,
                   textAlign: 'center',
                 }}>
-                2 {profile.length} Investments{' '}
+                {dataInvestment.filter(item => item.paidStatus === true).length}{' '}
+                Investments
               </Text>
             </View>
           </View>
@@ -149,16 +150,6 @@ class Profile extends Component {
               onPress={() => this.props.setUpdateProfile()}>
               <Text style={design.profileButtonText}>Profile</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              style={design.profileButton}
-              onPress={() => this.props.setProfileDetail(myToken)}>
-              <Text style={design.profileButtonText}>Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={design.profileButton}
-              onPress={() => this.props.setAdressDetail()}>
-              <Text style={design.profileButtonText}>Address</Text>
-            </TouchableOpacity> */}
           </View>
           <View
             style={{
@@ -214,13 +205,6 @@ class Profile extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-          {/* <View
-            style={{
-              
-              paddingHorizontal: 15,
-              marginVertical: 10,
-              flex: 1,
-            }}> */}
           {this.state.show ? (
             <FlatList
               data={dataInvestment.filter(
@@ -248,26 +232,40 @@ class Profile extends Component {
                       />
                     </View>
                     <View style={{paddingHorizontal: 10}}>
-                      <Text
-                        style={{
-                          fontFamily: 'poppins',
-                          fontSize: 17,
-                          height: 25,
-                        }}>
-                        {item.livestockName}
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: 'poppins',
-                          fontSize: 13,
-                          height: 16,
-                        }}>
-                        {item.livestockId.contractPeriod} Years
-                      </Text>
+                      <View style={{flexDirection: 'row'}}>
+                        <View>
+                          <Text
+                            style={{
+                              fontFamily: 'poppins',
+                              fontSize: 17,
+                              height: 25,
+                            }}>
+                            {item.livestockName}
+                          </Text>
+                          <Text
+                            style={{
+                              fontFamily: 'poppins',
+                              fontSize: 13,
+                              height: 16,
+                            }}>
+                            {item.livestockId.contractPeriod} Years
+                          </Text>
+                        </View>
+                        <View>
+                          {/* <Text
+                            style={{
+                              fontFamily: 'poppins',
+                              fontSize: 13,
+                              height: 16,
+                            }}>
+                            {item.updatedAt}
+                          </Text> */}
+                        </View>
+                      </View>
                       <View
                         style={{
                           flexDirection: 'row',
-                          justifyContent: 'space-evenly',
+                          justifyContent: 'space-around',
                           height: 16,
                         }}>
                         <Text
